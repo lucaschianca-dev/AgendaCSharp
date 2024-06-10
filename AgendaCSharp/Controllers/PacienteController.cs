@@ -66,19 +66,41 @@ public class PacienteController
 
     public void ExcluirPacienteByCpf()
     {
-        try
+        bool pacienteRemovido = false;
+
+        while (!pacienteRemovido)
         {
-            var cpf = _pacienteView.CapturarCpfParaRemocao();
-            _pacienteService.RemoverPacienteByCpf(cpf);
-            _pacienteView.ExibirMensagem("Paciente removido com sucesso!");
-        }
-        catch (InvalidOperationException ex)
-        {
-            _pacienteView.ExibirMensagem(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            _pacienteView.ExibirMensagem($"Erro: {ex.Message}");
+            try
+            {
+                var cpf = _pacienteView.CapturarCpfParaRemocao();
+                _pacienteService.RemoverPacienteByCpf(cpf);
+                _pacienteView.ExibirMensagem("Paciente removido com sucesso!");
+                pacienteRemovido = true;
+            }
+            catch (InvalidOperationException ex)
+            {
+                _pacienteView.ExibirMensagem(ex.Message);
+                _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
+
+                string condicao = Console.ReadLine().ToLower();
+                if (condicao == "n")
+                {
+                    _pacienteView.ExibirMensagem("");
+                    pacienteRemovido = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _pacienteView.ExibirMensagem($"Erro: {ex.Message}");
+                _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
+
+                string condicao = Console.ReadLine().ToLower();
+                if (condicao == "n")
+                {
+                    _pacienteView.ExibirMensagem("");
+                    pacienteRemovido = true;
+                }
+            }
         }
     }
 }

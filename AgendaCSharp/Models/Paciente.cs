@@ -2,7 +2,7 @@
 
 public class Paciente
 {
-    private string _cpf { get; }
+    private string _cpf;
     private string _nome;
     private DateTime _dataDeNascimento;
 
@@ -11,6 +11,12 @@ public class Paciente
         _cpf = cpf;
         _nome = nome;
         _dataDeNascimento = dataDeNascimento;
+    }
+
+    public string Cpf
+    {
+        get { return _cpf; }
+        set { _cpf = value; }
     }
 
     public string Nome

@@ -37,7 +37,8 @@ public class PacienteRepository
         }
         else
         {
-            throw new InvalidOperationException($"Erro: Nenhum paciente cadastrado com o CPF: {cpf}");
+            Console.WriteLine("");
+            throw new InvalidOperationException($"|ERRO| - Nenhum paciente cadastrado com o CPF: {cpf}\n");
         }
     }
 }

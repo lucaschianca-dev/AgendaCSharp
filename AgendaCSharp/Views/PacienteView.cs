@@ -9,11 +9,6 @@ public class PacienteView
         Console.WriteLine(mensagem);
     }
 
-    public void PularLinha()
-    {
-        Console.WriteLine("");
-    }
-
     public Paciente CapturarDados()
     {
         Console.WriteLine("-------------------------------");
@@ -44,10 +39,12 @@ public class PacienteView
 
     public void ExibirPacientes (List<Paciente> pacientes)
     {
-        Console.WriteLine("Lista de Pacientes:");
+        ExibirMensagem("\n---------------------------------------------------------------------");
+        ExibirMensagem("CPF         Nome                                Dt. Nasc.       Idade");
+        ExibirMensagem("---------------------------------------------------------------------\n");
         foreach (var paciente in pacientes)
         {
-            Console.WriteLine($"CPF: {paciente.Cpf}, Nome: {paciente.Nome}, Data de Nascimento: {paciente.DataDeNascimento:dd/MM/yyyy}");
+            Console.WriteLine($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {paciente.DataDeNascimento:dd/MM/yyyy} 18");
         }
     }
 

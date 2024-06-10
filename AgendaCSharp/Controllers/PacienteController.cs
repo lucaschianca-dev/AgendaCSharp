@@ -17,18 +17,18 @@ public class PacienteController
     public void ListarPadicentes()
     {
         var pacientes = _pacienteService.BuscarPacientes();
+        Console.WriteLine("");
         _pacienteView.ExibirPacientes(pacientes);
+        Console.WriteLine("");
     }
 
     public void CadastrarPaciente()
     {
         var paciente = _pacienteView.CapturarDados();
         _pacienteService.AdicionarPaciente(paciente);
-        _pacienteView.PularLinha();
-        _pacienteView.ExibirMensagem("----------------------------------");
+        _pacienteView.ExibirMensagem("\n----------------------------------");
         _pacienteView.ExibirMensagem(" Paciente cadastrado com sucesso!");
-        _pacienteView.ExibirMensagem("----------------------------------");
-        _pacienteView.PularLinha();
+        _pacienteView.ExibirMensagem("----------------------------------\n");
 
         while (true)
         {
@@ -45,9 +45,7 @@ public class PacienteController
             }
             else
             {
-                _pacienteView.PularLinha();
-                _pacienteView.ExibirMensagem("Opção inválida. Por favor, digite 'y' para sim ou 'n' para não.");
-                _pacienteView.PularLinha();
+                _pacienteView.ExibirMensagem("\nOpção inválida. Por favor, digite 'y' para sim ou 'n' para não.\n");
             }
         }
     }

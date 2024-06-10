@@ -43,4 +43,10 @@ public class PacienteView
             Console.WriteLine($"CPF: {paciente.Cpf}, Nome: {paciente.Nome}, Data de Nascimento: {paciente.DataDeNascimento:dd/MM/yyyy}");
         }
     }
+
+    public string CapturarCpfParaRemocao()
+    {
+        Console.Write("Informe o CPF do paciente a ser removido: ");
+        return Console.ReadLine();
+    }
 }

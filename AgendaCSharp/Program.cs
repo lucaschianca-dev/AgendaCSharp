@@ -26,12 +26,15 @@ class Program
             switch (opcao)
             {
                 case "1":
-                    pacienteController.CadastraPaciente();
+                    pacienteController.CadastrarPaciente();
                     break;
                 case "2":
                     pacienteController.ListarPadicentes();
                     break;
                 case "3":
+                    pacienteController.ExcluirPacienteByCpf();
+                    break;
+                case "4":
                     sair = true;
                     break;
                 default:

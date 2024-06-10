@@ -17,8 +17,13 @@ public class PacienteService
         _pacienteRepository.AdicionarPaciente(paciente);
     }
 
-    public List<Paciente> ListarPacientes()
+    public List<Paciente> BuscarPacientes()
     {
-        return _pacienteRepository.ListarPacientes();
+        return _pacienteRepository.BuscarPacientes();
+    }
+
+    public void RemoverPacienteByCpf(string cpf)
+    {
+        _pacienteRepository.RemoverPacienteByCpf(cpf);
     }
 }

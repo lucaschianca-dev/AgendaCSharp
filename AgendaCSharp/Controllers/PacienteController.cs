@@ -16,14 +16,21 @@ public class PacienteController
 
     public void ListarPadicentes()
     {
-        var pacientes = _pacienteService.ListarPacientes();
+        var pacientes = _pacienteService.BuscarPacientes();
         _pacienteView.ExibirPacientes(pacientes);
     }
 
-    public void CadastraPaciente()
+    public void CadastrarPaciente()
     {
         var paciente = _pacienteView.CapturarDados();
         _pacienteService.AdicionarPaciente(paciente);
         _pacienteView.ExibirMensagem("Paciente cadastrado com sucesso!");
+    }
+
+    public void ExcluirPacienteByCpf()
+    {
+        var cpf = _pacienteView.CapturarCpfParaRemocao();
+        _pacienteService.RemoverPacienteByCpf(cpf);
+        _pacienteView.ExibirMensagem("Paciente excluído com sucesso!");
     }
 }

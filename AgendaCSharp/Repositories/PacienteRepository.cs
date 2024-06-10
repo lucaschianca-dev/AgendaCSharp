@@ -11,12 +11,17 @@ public class PacienteRepository
         _pacientes.Add(paciente);
     }
 
-    public List<Paciente> ListarPacientes()
+    public List<Paciente> BuscarPacientes()
     {
     return _pacientes;
     }
 
-    public void RemoverPaciente(String cpf)
+    public Paciente BuscarPacienteByCpf(string cpf)
+    { 
+        return _pacientes.FirstOrDefault(p => p.Cpf == cpf);
+    }
+
+    public void RemoverPacienteByCpf(String cpf)
     {
         var paciente = _pacientes.FirstOrDefault(p => p.Cpf == cpf);
 

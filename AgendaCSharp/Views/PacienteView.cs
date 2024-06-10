@@ -4,6 +4,11 @@ namespace AgendaCSharp.Views;
 
 public class PacienteView
 {
+    public void ExibirMensagem(string mensagem)
+    {
+        Console.WriteLine(mensagem);
+    }
+
     public Paciente CapturarDados()
     {
         Console.WriteLine("Informe os dados do paciente:");
@@ -28,5 +33,14 @@ public class PacienteView
         }
 
         return new Paciente(cpf, nome, dataDeNascimento);
+    }
+
+    public void ExibirPacientes (List<Paciente> pacientes)
+    {
+        Console.WriteLine("Lista de Pacientes:");
+        foreach (var paciente in pacientes)
+        {
+            Console.WriteLine($"CPF: {paciente.Cpf}, Nome: {paciente.Nome}, Data de Nascimento: {paciente.DataDeNascimento:dd/MM/yyyy}");
+        }
     }
 }

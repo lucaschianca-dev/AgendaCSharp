@@ -16,4 +16,9 @@ public class PacienteService
     {
         _pacienteRepository.AdicionarPaciente(paciente);
     }
+
+    public List<Paciente> ListarPacientes()
+    {
+        return _pacienteRepository.ListarPacientes();
+    }
 }

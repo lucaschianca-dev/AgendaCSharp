@@ -9,9 +9,16 @@ public class PacienteView
         Console.WriteLine(mensagem);
     }
 
+    public void PularLinha()
+    {
+        Console.WriteLine("");
+    }
+
     public Paciente CapturarDados()
     {
-        Console.WriteLine("Informe os dados do paciente:");
+        Console.WriteLine("-------------------------------");
+        Console.WriteLine(" Informe os dados do paciente:");
+        Console.WriteLine("-------------------------------");
         Console.Write("CPF: ");
         var cpf = Console.ReadLine();
         Console.Write("Nome: ");
@@ -46,7 +53,8 @@ public class PacienteView
 
     public string CapturarCpfParaRemocao()
     {
-        Console.Write("Informe o CPF do paciente a ser removido: ");
+        Console.WriteLine();
+        Console.Write("CPF: ");
         return Console.ReadLine();
     }
 }

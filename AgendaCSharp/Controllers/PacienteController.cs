@@ -24,13 +24,49 @@ public class PacienteController
     {
         var paciente = _pacienteView.CapturarDados();
         _pacienteService.AdicionarPaciente(paciente);
-        _pacienteView.ExibirMensagem("Paciente cadastrado com sucesso!");
+        _pacienteView.PularLinha();
+        _pacienteView.ExibirMensagem("----------------------------------");
+        _pacienteView.ExibirMensagem(" Paciente cadastrado com sucesso!");
+        _pacienteView.ExibirMensagem("----------------------------------");
+        _pacienteView.PularLinha();
+
+        while (true)
+        {
+            _pacienteView.ExibirMensagem("Deseja cadastrar outro paciente? (y / n)");
+            string condicao = Console.ReadLine().ToLower();
+            if (condicao == "y")
+            {
+                CadastrarPaciente();
+                break;
+            }
+            else if (condicao == "n")
+            {
+                break;
+            }
+            else
+            {
+                _pacienteView.PularLinha();
+                _pacienteView.ExibirMensagem("Opção inválida. Por favor, digite 'y' para sim ou 'n' para não.");
+                _pacienteView.PularLinha();
+            }
+        }
     }
 
     public void ExcluirPacienteByCpf()
     {
-        var cpf = _pacienteView.CapturarCpfParaRemocao();
-        _pacienteService.RemoverPacienteByCpf(cpf);
-        _pacienteView.ExibirMensagem("Paciente excluído com sucesso!");
+        try
+        {
+            var cpf = _pacienteView.CapturarCpfParaRemocao();
+            _pacienteService.RemoverPacienteByCpf(cpf);
+            _pacienteView.ExibirMensagem("Paciente removido com sucesso!");
+        }
+        catch (InvalidOperationException ex)
+        {
+            _pacienteView.ExibirMensagem(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _pacienteView.ExibirMensagem($"Erro: {ex.Message}");
+        }
     }
 }

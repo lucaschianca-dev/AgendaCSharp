@@ -17,17 +17,27 @@ public class PacienteRepository
     }
 
     public Paciente BuscarPacienteByCpf(string cpf)
-    { 
-        return _pacientes.FirstOrDefault(p => p.Cpf == cpf);
+    {
+        try
+        {
+            return _pacientes.FirstOrDefault(p => p.Cpf == cpf);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Erro ao buscar paciente por CPF no repositório.", ex);
+        }
     }
 
     public void RemoverPacienteByCpf(String cpf)
     {
         var paciente = _pacientes.FirstOrDefault(p => p.Cpf == cpf);
-
         if (paciente != null)
         {
             _pacientes.Remove(paciente);
+        }
+        else
+        {
+            throw new InvalidOperationException($"Erro: Nenhum paciente cadastrado com o CPF: {cpf}");
         }
     }
 }

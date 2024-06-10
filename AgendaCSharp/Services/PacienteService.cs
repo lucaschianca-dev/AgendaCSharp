@@ -24,6 +24,11 @@ public class PacienteService
 
     public void RemoverPacienteByCpf(string cpf)
     {
-        _pacienteRepository.RemoverPacienteByCpf(cpf);
-    }
+            if (string.IsNullOrWhiteSpace(cpf))
+            {
+                throw new ArgumentException("O CPF é obrigatório.");
+            }
+
+            _pacienteRepository.RemoverPacienteByCpf(cpf);
+        }
 }

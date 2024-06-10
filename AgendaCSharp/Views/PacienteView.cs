@@ -1,4 +1,5 @@
 ﻿using AgendaCSharp.Models;
+using AgendaCSharp.Services;
 using AgendaCSharp.Verificadores;
 
 namespace AgendaCSharp.Views;
@@ -6,11 +7,14 @@ namespace AgendaCSharp.Views;
 public class PacienteView
 {
     private readonly IsNumerico _isNumerico;
+    private readonly PacienteService _pacienteService;
 
-    public PacienteView(IsNumerico isNumerico)
+    public PacienteView(IsNumerico isNumerico, PacienteService pacienteService)
     {
         _isNumerico = isNumerico;
+        _pacienteService = pacienteService;
     }
+
     public void ExibirMensagem(string mensagem)
     {
         Console.WriteLine(mensagem);
@@ -18,9 +22,9 @@ public class PacienteView
 
     public Paciente CapturarDados()
     {
-        Console.WriteLine("-------------------------------");
-        Console.WriteLine(" Informe os dados do paciente:");
-        Console.WriteLine("-------------------------------");
+        ExibirMensagem("-------------------------------");
+        ExibirMensagem(" Informe os dados do paciente:");
+        ExibirMensagem("-------------------------------");
 
         string cpfValidado;
         while (true)
@@ -30,15 +34,19 @@ public class PacienteView
 
             if (string.IsNullOrEmpty(cpfSemValidacao))
             {
-                Console.WriteLine("\n|ERRO| - CPF não pode ser nulo ou vazio! Tente novamente.\n");
+                ExibirMensagem("\n|ERRO| - CPF não pode ser nulo ou vazio! Tente novamente.\n");
             }
             else if (cpfSemValidacao.Length != 11)
             {
-                Console.WriteLine("\n|ERRO| - CPF deve conter 11 dígitos numéricos! Tente novamente.\n");
+                ExibirMensagem("\n|ERRO| - CPF deve conter 11 dígitos numéricos! Tente novamente.\n");
             }
             else if (!IsNumerico.isAllDigits(cpfSemValidacao))
             {
-                Console.WriteLine("\n|ERRO| - CPF deve conter apenas números! Tente novamente.\n");
+                ExibirMensagem("\n|ERRO| - CPF deve conter apenas números! Tente novamente.\n");
+            }
+            else if (_pacienteService.VerificarCpf(cpfSemValidacao))
+            {
+                ExibirMensagem("\n|ERRO| - CPF já cadastrado! Tente novamente.\n");
             }
             else
             {

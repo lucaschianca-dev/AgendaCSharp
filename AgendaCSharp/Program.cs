@@ -11,7 +11,7 @@ class Program
         PacienteRepository pacienteRepository = new PacienteRepository();
         PacienteService pacienteService = new PacienteService(pacienteRepository);
         IsNumerico isNumerico = new IsNumerico();
-        PacienteView pacienteView = new PacienteView(isNumerico);
+        PacienteView pacienteView = new PacienteView(isNumerico, pacienteService);
         PacienteController pacienteController = new PacienteController(pacienteService, pacienteView);
 
         bool sair = false;

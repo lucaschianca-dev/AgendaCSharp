@@ -14,6 +14,12 @@ public class PacienteService
 
     public void AdicionarPaciente(Paciente paciente)
     {
+        var pacienteExistente = _pacienteRepository.BuscarPacienteByCpf(paciente.Cpf);
+        if (pacienteExistente != null)
+        {
+            throw new InvalidOperationException($"|ERRO| - CPF {paciente.Cpf} já está cadastrado!");
+        }
+
         _pacienteRepository.AdicionarPaciente(paciente);
     }
 
@@ -31,4 +37,9 @@ public class PacienteService
 
             _pacienteRepository.RemoverPacienteByCpf(cpf);
         }
+
+    public bool VerificarCpf(string cpf)
+    {
+        return _pacienteRepository.BuscarPacienteByCpf(cpf) != null;
+    }
 }

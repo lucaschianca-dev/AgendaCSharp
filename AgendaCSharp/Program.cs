@@ -1,6 +1,7 @@
 ﻿using AgendaCSharp.Controllers;
 using AgendaCSharp.Repositories;
 using AgendaCSharp.Services;
+using AgendaCSharp.Verificadores;
 using AgendaCSharp.Views;
 
 class Program
@@ -9,7 +10,8 @@ class Program
     {
         PacienteRepository pacienteRepository = new PacienteRepository();
         PacienteService pacienteService = new PacienteService(pacienteRepository);
-        PacienteView pacienteView = new PacienteView();
+        IsNumerico isNumerico = new IsNumerico();
+        PacienteView pacienteView = new PacienteView(isNumerico);
         PacienteController pacienteController = new PacienteController(pacienteService, pacienteView);
 
         bool sair = false;

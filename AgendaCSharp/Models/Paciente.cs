@@ -2,21 +2,21 @@
 
 public class Paciente
 {
-    private string _cpf;
+    private char[] _cpf = new char[11];
     private string _nome;
     private DateTime _dataDeNascimento;
 
     public Paciente(string cpf, string nome, DateTime dataDeNascimento)
     {
-        _cpf = cpf;
+        Cpf = cpf;
         _nome = nome;
         _dataDeNascimento = dataDeNascimento;
     }
 
     public string Cpf
     {
-        get { return _cpf; }
-        set { _cpf = value; }
+        get { return new string(_cpf); }
+        set { _cpf = value.ToCharArray(); }
     }
 
     public string Nome

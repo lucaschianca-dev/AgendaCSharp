@@ -37,10 +37,12 @@ public class PacienteController
             if (condicao == "y")
             {
                 CadastrarPaciente();
+                Console.WriteLine("");
                 break;
             }
             else if (condicao == "n")
             {
+                Console.WriteLine("");
                 break;
             }
             else

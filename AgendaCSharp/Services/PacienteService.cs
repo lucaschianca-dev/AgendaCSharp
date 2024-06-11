@@ -32,7 +32,7 @@ public class PacienteService
     {
             if (string.IsNullOrWhiteSpace(cpf))
             {
-                throw new ArgumentException("O CPF é obrigatório.");
+                throw new ArgumentException("O CPF é obrigatório!");
             }
 
             _pacienteRepository.RemoverPacienteByCpf(cpf);

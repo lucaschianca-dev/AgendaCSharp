@@ -91,7 +91,7 @@ public class PacienteController
             }
             catch (Exception ex)
             {
-                _pacienteView.ExibirMensagem($"Erro: {ex.Message}");
+                _pacienteView.ExibirMensagem($"\n|ERRO| - {ex.Message}\n");
                 _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
 
                 string condicao = Console.ReadLine().ToLower();

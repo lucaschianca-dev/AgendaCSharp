@@ -114,5 +114,4 @@ public class ConsultaView
 ";
         Console.WriteLine(logoListaDeConsultas);
     }
-
 }

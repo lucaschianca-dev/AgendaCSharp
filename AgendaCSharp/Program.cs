@@ -8,11 +8,17 @@ class Program
 {
     public static void Main(string[] args)
     {
+        IsNumerico isNumerico = new IsNumerico();
+
         PacienteRepository pacienteRepository = new PacienteRepository();
         PacienteService pacienteService = new PacienteService(pacienteRepository);
-        IsNumerico isNumerico = new IsNumerico();
         PacienteView pacienteView = new PacienteView(isNumerico, pacienteService);
         PacienteController pacienteController = new PacienteController(pacienteService, pacienteView);
+
+        var consultaRepository = new ConsultaRepository();
+        var consultaService = new ConsultaService(consultaRepository);
+        var consultaView = new ConsultaView();
+        var consultaController = new ConsultaController(consultaService, consultaView);
 
         bool sair = false;
         while (!sair)
@@ -21,7 +27,9 @@ class Program
             Console.WriteLine("1. Cadastrar Paciente");
             Console.WriteLine("2. Listar Pacientes");
             Console.WriteLine("3. Remover Paciente");
-            Console.WriteLine("4. Sair");
+            Console.WriteLine("4. Cadastrar Consulta");
+            Console.WriteLine("5. Listar Consulta");
+            Console.WriteLine("6. Sair");
             Console.Write("Escolha uma opção: ");
             var opcao = Console.ReadLine();
 
@@ -37,6 +45,12 @@ class Program
                     pacienteController.ExcluirPacienteByCpf();
                     break;
                 case "4":
+                    consultaController.CadastraConsulta();
+                    break;
+                case "5":
+                    consultaController.ListarTodasConsultas();
+                    break;
+                case "6":
                     sair = true;
                     break;
                 default:

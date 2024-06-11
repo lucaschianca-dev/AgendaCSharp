@@ -13,7 +13,7 @@ public class PacienteRepository
 
     public List<Paciente> BuscarPacientes()
     {
-    return _pacientes;
+        return _pacientes;
     }
 
     public Paciente BuscarPacienteByCpf(string cpf)

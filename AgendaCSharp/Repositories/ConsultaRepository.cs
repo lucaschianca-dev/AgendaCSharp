@@ -11,7 +11,7 @@ public class ConsultaRepository
         _consultas.Add(consulta);
     }
 
-    public List<Consulta> BuscarConsultas(Consulta consulta)
+    public List<Consulta> BuscarTodasConsultas()
     {
         return _consultas;
     }

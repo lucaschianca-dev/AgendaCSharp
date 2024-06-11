@@ -38,7 +38,7 @@ public class PacienteView
             }
             else if (cpfSemValidacao.Length != 11)
             {
-                ExibirMensagem("\n|ERRO| - CPF deve conter 11 dígitos numéricos! Tente novamente.\n");
+                ExibirMensagem("\n|ERRO| - CPF deve conter 11 dígitos! Tente novamente.\n");
             }
             else if (!IsNumerico.isAllDigits(cpfSemValidacao))
             {

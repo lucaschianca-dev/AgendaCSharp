@@ -81,11 +81,12 @@ public class ConsultaView
             }
         }
 
-        return new Consulta(data, horaInicial, horaFinal);  
+        return new Consulta(data, horaInicial, horaFinal);
     }
 
     public void ExibirConsultas(List<Consulta> consultas)
     {
+        ExibeLogoListaDeConsultas();
         Console.WriteLine("\n---------------------------------------------------------------------");
         Console.WriteLine("Data         H.Ini.   H.Fim");
         Console.WriteLine("---------------------------------------------------------------------\n");
@@ -99,6 +100,19 @@ public class ConsultaView
     public void ExibirMensagem(string mensagem)
     {
         Console.WriteLine(mensagem);
+    }
+
+    public void ExibeLogoListaDeConsultas()
+    {
+        string logoListaDeConsultas = @"
+  _     _     _              _         ____                      _ _            
+ | |   (_)___| |_ __ _    __| | ___   / ___|___  _ __  ___ _   _| | |_ __ _ ___ 
+ | |   | / __| __/ _` |  / _` |/ _ \ | |   / _ \| '_ \/ __| | | | | __/ _` / __|
+ | |___| \__ \ || (_| | | (_| |  __/ | |__| (_) | | | \__ \ |_| | | || (_| \__ \
+ |_____|_|___/\__\__,_|  \__,_|\___|  \____\___/|_| |_|___/\__,_|_|\__\__,_|___/
+                                                                                
+";
+        Console.WriteLine(logoListaDeConsultas);
     }
 
 }

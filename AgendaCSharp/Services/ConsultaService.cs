@@ -20,7 +20,7 @@ public class ConsultaService
 
         if (consulta.Data <= DateTime.Now.Date && consulta.HoraInicial <= DateTime.Now.TimeOfDay)
         {
-            throw new InvalidOperationException("|ERRO| - A consulta deve ser agendada para uma data e hora futuras.");
+            throw new InvalidOperationException("|ERRO| - A consulta deve ser agendada para uma data e hora futura.");
         }
 
         if (paciente.Consultas.Any(c => c.Data == consulta.Data &&

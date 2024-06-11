@@ -19,9 +19,17 @@ public class ConsultaView
         {
             Console.Write("Data da Consulta (DDMMAAAA): ");
             var dataInput = Console.ReadLine();
+
             if (DateTime.TryParseExact(dataInput, "ddMMyyyy", null, System.Globalization.DateTimeStyles.None, out data))
             {
-                break;
+                if (data > DateTime.Now.Date || (data == DateTime.Now.Date))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("A consulta deve ser para uma data futura. Tente novamente.");
+                }
             }
             else
             {

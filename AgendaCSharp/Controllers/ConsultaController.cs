@@ -48,11 +48,11 @@ public class ConsultaController
         }
         catch (InvalidOperationException ex)
         {
-            _consultaView.ExibirMensagem($"\n|ERRO| - {ex.Message}\n");
+            _consultaView.ExibirMensagem($"\n{ex.Message}\n");
         }
         catch (Exception ex)
         {
-            _consultaView.ExibirMensagem($"\n|ERRO| - {ex.Message}\n");
+            _consultaView.ExibirMensagem($"\n{ex.Message}\n");
         }
     }
 

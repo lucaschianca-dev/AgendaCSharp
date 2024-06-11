@@ -10,15 +10,17 @@ class Program
     {
         IsNumerico isNumerico = new IsNumerico();
 
-        PacienteRepository pacienteRepository = new PacienteRepository();
-        PacienteService pacienteService = new PacienteService(pacienteRepository);
-        PacienteView pacienteView = new PacienteView(isNumerico, pacienteService);
-        PacienteController pacienteController = new PacienteController(pacienteService, pacienteView);
+        var pacienteRepository = new PacienteRepository();
+        var consultaRepository = new ConsultaRepository(pacienteRepository);
+        var pacienteService = new PacienteService(pacienteRepository, consultaRepository);
+        var consultaService = new ConsultaService(consultaRepository, pacienteRepository);
 
-        var consultaRepository = new ConsultaRepository();
-        var consultaService = new ConsultaService(consultaRepository);
+        var pacienteView = new PacienteView(isNumerico, pacienteService);
+        var pacienteController = new PacienteController(pacienteService, pacienteView);
+
         var consultaView = new ConsultaView();
-        var consultaController = new ConsultaController(consultaService, consultaView);
+        var consultaController = new ConsultaController(consultaService, pacienteService, consultaView);
+
 
         bool sair = false;
         while (!sair)
@@ -45,7 +47,8 @@ class Program
                     pacienteController.ExcluirPacienteByCpf();
                     break;
                 case "4":
-                    consultaController.CadastraConsulta();
+                    Console.WriteLine("--------- Cadastrar Consulta ---------");
+                    consultaController.CadastrarConsulta();
                     break;
                 case "5":
                     consultaController.ListarTodasConsultas();

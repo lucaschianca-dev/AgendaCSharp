@@ -123,6 +123,10 @@ public class PacienteView
         {
             string dataNascimentoFormatada = paciente.DataDeNascimento.ToString("dd/MM/yyyy").PadRight(18);
             Console.WriteLine($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {dataNascimentoFormatada} {paciente.Idade}");
+            foreach (var consulta in paciente.Consultas.Where(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
+            {
+                Console.WriteLine($"  Consulta - Data: {consulta.Data:dd/MM/yyyy}, Hora: {consulta.HoraInicial:hh\\:mm} - {consulta.HoraFinal:hh\\:mm}");
+            }
         }
     }
 

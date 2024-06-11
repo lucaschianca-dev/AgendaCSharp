@@ -1,39 +1,18 @@
 ﻿using AgendaCSharp.Models;
-using AgendaCSharp.Verificadores;
 
 namespace AgendaCSharp.Views;
 
 public class ConsultaView
 {
+    public string CapturarCpf()
+    {
+        Console.Write("CPF: ");
+        return Console.ReadLine();
+    }
+
     public Consulta CapturarDadosConsulta()
     {
-        Console.WriteLine("Digite os dados da consulta");
-
-
-        string cpfPacienteValidado;
-        while (true)
-        {
-            Console.Write("CPF: ");
-            var cpfSemValidacao = Console.ReadLine();
-
-            if (string.IsNullOrEmpty(cpfSemValidacao))
-            {
-                Console.WriteLine("\n|ERRO| - CPF não pode ser nulo ou vazio! Tente novamente.\n");
-            }
-            else if (cpfSemValidacao.Length != 11)
-            {
-                Console.WriteLine("\n|ERRO| - CPF deve conter 11 dígitos numéricos! Tente novamente.\n");
-            }
-            else if (!IsNumerico.isAllDigits(cpfSemValidacao))
-            {
-                Console.WriteLine("\n|ERRO| - CPF deve conter apenas números! Tente novamente.\n");
-            }
-            else
-            {
-                cpfPacienteValidado = cpfSemValidacao;
-                break;
-            }
-        }
+        Console.WriteLine("\n>> Digite os dados da consulta <<\n");
 
         DateTime data;
         while (true)
@@ -94,14 +73,24 @@ public class ConsultaView
             }
         }
 
-        return new Consulta(cpfPacienteValidado,data, horaInicial, horaFinal);  
+        return new Consulta(data, horaInicial, horaFinal);  
     }
 
-    public void exibirConsultas(List<Consulta> consultas)
+    public void ExibirConsultas(List<Consulta> consultas)
     {
+        Console.WriteLine("\n---------------------------------------------------------------------");
+        Console.WriteLine("Data         H.Ini.   H.Fim");
+        Console.WriteLine("---------------------------------------------------------------------\n");
+
         foreach (var consulta in consultas)
         {
-            Console.WriteLine($"{consulta.CpfPaciente} {consulta.Data} {consulta.HoraInicial} {consulta.HoraFinal}");
+            Console.WriteLine($"{consulta.Data:dd/MM/yyyy} {consulta.HoraInicial:hh\\:mm} {consulta.HoraFinal:hh\\:mm}");
         }
     }
+
+    public void ExibirMensagem(string mensagem)
+    {
+        Console.WriteLine(mensagem);
+    }
+
 }

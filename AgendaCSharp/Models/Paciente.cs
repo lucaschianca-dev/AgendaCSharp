@@ -6,6 +6,7 @@ public class Paciente
     private string _nome;
     private DateTime _dataDeNascimento;
     private int _idade;
+    public List<Consulta> Consultas { get; set; }
 
     public Paciente(string cpf, string nome, DateTime dataDeNascimento, int idade)
     {
@@ -13,6 +14,7 @@ public class Paciente
         _nome = nome;
         _dataDeNascimento = dataDeNascimento;
         _idade = idade;
+        Consultas = new List<Consulta>();
     }
 
     public string Cpf

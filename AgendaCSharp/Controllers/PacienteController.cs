@@ -74,7 +74,7 @@ public class PacienteController
             {
                 var cpf = _pacienteView.CapturarCpfParaRemocao();
                 _pacienteService.RemoverPacienteByCpf(cpf);
-                _pacienteView.ExibirMensagem("Paciente removido com sucesso!");
+                _pacienteView.ExibirMensagem("\nPaciente removido com sucesso!\n");
                 pacienteRemovido = true;
             }
             catch (InvalidOperationException ex)

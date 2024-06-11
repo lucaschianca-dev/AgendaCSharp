@@ -5,12 +5,14 @@ public class Paciente
     private char[] _cpf = new char[11];
     private string _nome;
     private DateTime _dataDeNascimento;
+    private int _idade;
 
-    public Paciente(string cpf, string nome, DateTime dataDeNascimento)
+    public Paciente(string cpf, string nome, DateTime dataDeNascimento, int idade)
     {
         Cpf = cpf;
         _nome = nome;
         _dataDeNascimento = dataDeNascimento;
+        _idade = idade;
     }
 
     public string Cpf
@@ -29,5 +31,11 @@ public class Paciente
     {
         get { return _dataDeNascimento; }
         set { _dataDeNascimento = value; }
+    }
+
+    public int Idade
+    {
+        get { return _idade; }
+        set { _idade = value; }
     }
 }

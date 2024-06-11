@@ -85,13 +85,25 @@ public class PacienteView
         }
 
         DateTime dataDeNascimento;
+        int idade;
         while (true)
         {
             Console.Write("Data de Nascimento (DDMMAAAA): ");
             var dataInput = Console.ReadLine();
+
+            
             if (DateTime.TryParseExact(dataInput, "ddMMyyyy", null, System.Globalization.DateTimeStyles.None, out dataDeNascimento))
             {
-                break;
+                idade = VerificaDataDeNascimento.CalcularIdade(dataDeNascimento);
+                
+                if (idade >= 13)
+                {
+                    break;
+                }
+                else
+                {
+                    ExibirMensagem("\n|ERRO| - A idade mínima para cadastro é 13 anos. Tente novamente.\n");
+                }
             }
             else
             {
@@ -99,7 +111,7 @@ public class PacienteView
             }
         }
 
-        return new Paciente(cpfValidado, nomeValidado, dataDeNascimento);
+        return new Paciente(cpfValidado, nomeValidado, dataDeNascimento, idade);
     }
 
     public void ExibirPacientes (List<Paciente> pacientes)
@@ -109,7 +121,8 @@ public class PacienteView
         ExibirMensagem("---------------------------------------------------------------------\n");
         foreach (var paciente in pacientes)
         {
-            Console.WriteLine($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {paciente.DataDeNascimento:dd/MM/yyyy} 18");
+            string dataNascimentoFormatada = paciente.DataDeNascimento.ToString("dd/MM/yyyy").PadRight(18);
+            Console.WriteLine($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {dataNascimentoFormatada} {paciente.Idade}");
         }
     }
 

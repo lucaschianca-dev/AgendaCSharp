@@ -1,5 +1,8 @@
 ﻿using AgendaCSharp.Services;
 using AgendaCSharp.Views;
+using Colorful;
+using Console = Colorful.Console;
+using System.Drawing;
 
 namespace AgendaCSharp.Controllers;
 
@@ -29,13 +32,16 @@ public class PacienteController
         try
         {
             _pacienteService.AdicionarPaciente(paciente);
-            _pacienteView.ExibirMensagem("\n----------------------------------");
-            _pacienteView.ExibirMensagem(" Paciente cadastrado com sucesso!");
-            _pacienteView.ExibirMensagem("----------------------------------\n");
+            _pacienteView.ExibirMensagemVerde("\n ♦ Paciente cadastrado com sucesso!\n");
 
             while (true)
             {
-                _pacienteView.ExibirMensagem("Deseja cadastrar outro paciente? (y / n)");
+                _pacienteView.ExibirMensagemAqua("\n► ");
+                _pacienteView.ExibirMensagem("Deseja cadastrar outro paciente? (");
+                _pacienteView.ExibirMensagemAqua("y");
+                _pacienteView.ExibirMensagem("/");
+                _pacienteView.ExibirMensagemAqua("n");
+                _pacienteView.ExibirMensagem(")\n");
                 string condicao = Console.ReadLine().ToLower();
                 if (condicao == "y")
                 {
@@ -45,12 +51,17 @@ public class PacienteController
                 }
                 else if (condicao == "n")
                 {
-                    Console.WriteLine("");
+                    Console.Clear();
                     break;
                 }
                 else
                 {
-                    _pacienteView.ExibirMensagem("\nOpção inválida. Por favor, digite 'y' para sim ou 'n' para não.\n");
+                    _pacienteView.ExibirMensagemVermelho(" ▲ Opção inválida. ");
+                    _pacienteView.ExibirMensagem("Por favor, digite '");
+                    _pacienteView.ExibirMensagemAqua("y");
+                    _pacienteView.ExibirMensagem("' para sim ou '");
+                    _pacienteView.ExibirMensagemAqua("n");
+                    _pacienteView.ExibirMensagem("' para não.\n");
                 }
             }
         }
@@ -60,7 +71,7 @@ public class PacienteController
         }
         catch (Exception ex)
         {
-            _pacienteView.ExibirMensagem($"Erro: {ex.Message}");
+            _pacienteView.ExibirMensagemVermelho($"Erro: {ex.Message}");
         }
     }
 
@@ -74,30 +85,37 @@ public class PacienteController
             {
                 var cpf = _pacienteView.CapturarCpfParaRemocao();
                 _pacienteService.RemoverPacienteByCpf(cpf);
-                _pacienteView.ExibirMensagem("\nPaciente removido com sucesso!\n");
+                _pacienteView.ExibirMensagemVerde("\n ♦ Paciente removido com sucesso!\n");
                 pacienteRemovido = true;
             }
             catch (InvalidOperationException ex)
             {
-                _pacienteView.ExibirMensagem(ex.Message);
-                _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
+                _pacienteView.ExibirMensagem($"\n|");
+                _pacienteView.ExibirMensagemAqua("ERRO");
+                _pacienteView.ExibirMensagem($"| - {ex.Message}\n");
+                _pacienteView.ExibirMensagemAqua("► ");
+                _pacienteView.ExibirMensagem("Deseja tentar novamente? (");
+                _pacienteView.ExibirMensagemAqua("y");
+                _pacienteView.ExibirMensagem("/");
+                _pacienteView.ExibirMensagemAqua("n");
+                _pacienteView.ExibirMensagem(")\n");
 
                 string condicao = Console.ReadLine().ToLower();
                 if (condicao == "n")
                 {
-                    _pacienteView.ExibirMensagem("");
                     pacienteRemovido = true;
                 }
             }
             catch (Exception ex)
             {
-                _pacienteView.ExibirMensagem($"\n|ERRO| - {ex.Message}\n");
+                _pacienteView.ExibirMensagem($"\n|");
+                _pacienteView.ExibirMensagemAqua("ERRO");
+                _pacienteView.ExibirMensagem($"| - {ex.Message}\n");
                 _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
 
                 string condicao = Console.ReadLine().ToLower();
                 if (condicao == "n")
                 {
-                    _pacienteView.ExibirMensagem("");
                     pacienteRemovido = true;
                 }
             }

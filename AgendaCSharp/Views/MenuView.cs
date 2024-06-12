@@ -1,5 +1,7 @@
 ﻿using AgendaCSharp.Controllers;
-using System.Security.Cryptography.X509Certificates;
+using Colorful;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace AgendaCSharp.Views;
 
@@ -7,7 +9,7 @@ public class MenuView
 {
     public void LogoInicial()
     {
-        Console.WriteLine(logoInicial);
+        Console.WriteLine(logoInicial, Color.Aqua);
     }
 
     public void ConsoleTitulo()
@@ -21,7 +23,7 @@ public class MenuView
         while (!sair)
         {
             Console.Clear();
-            Console.WriteLine(mainMenu);
+            Console.WriteLine(mainMenu, Color.Aqua);
             OpcoesMenu("1", "Cadastro de pacientes");
             OpcoesMenu("2", "Agenda");
             OpcoesMenu("3", "Sair\n");
@@ -54,8 +56,7 @@ public class MenuView
         bool voltar = false;
         while (!voltar)
         {
-            Console.Clear();
-            Console.WriteLine(logoCadastroPacientes);
+            Console.WriteLine(logoCadastroPacientes, Color.Aqua);
             OpcoesMenu("1", "Cadastrar paciente");
             OpcoesMenu("2", "Excluir paciente");
             OpcoesMenu("3", "Listar pacientes (ordenado por CPF)");
@@ -71,11 +72,20 @@ public class MenuView
                     break;
                 case "2":
                     pacienteController.ExcluirPacienteByCpf();
+                    Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
+                    Console.ReadKey(true);
+                    Console.Clear();
                     break;
                 case "3":
+                    Console.Clear();
+                    pacienteController.ListarPadicentes();
                     //pacienteController.ListarPacientesByCpf();
+                    Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
+                    Console.ReadKey(true);
+                    Console.Clear();
                     break;
                 case "4":
+                    pacienteController.ListarPadicentes();
                     //pacienteController.ListarPacientesByNome();
                     break;
                 case "5":
@@ -93,7 +103,7 @@ public class MenuView
         bool voltar = false;
         while (!voltar)
         {
-            Console.WriteLine(agenda);
+            Console.WriteLine(agenda, Color.Aqua);
             OpcoesMenu("1", "Agendar Consulta");
             OpcoesMenu("2", "Cancelar Agendamento");
             OpcoesMenu("3", "Listar Agenda");
@@ -136,7 +146,7 @@ public class MenuView
     public void OpcoesMenu(string numero, string mensagem)
     {
         Console.Write("[");
-        Console.Write(numero, ConsoleColor.Red);
+        Console.Write(numero, Color.Aqua);
         Console.WriteLine("] " + mensagem);
     }
 

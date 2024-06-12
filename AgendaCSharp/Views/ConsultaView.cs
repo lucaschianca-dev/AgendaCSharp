@@ -1,4 +1,7 @@
 ﻿using AgendaCSharp.Models;
+using Colorful;
+using Console = Colorful.Console;
+using System.Drawing;
 
 namespace AgendaCSharp.Views;
 
@@ -93,7 +96,7 @@ public class ConsultaView
 
         foreach (var consulta in consultas)
         {
-            Console.WriteLine($"{consulta.Data:dd/MM/yyyy} {consulta.HoraInicial:hh\\:mm} {consulta.HoraFinal:hh\\:mm}");
+            Console.WriteLine($"{consulta.Data:dd/MM/yyyy} {consulta.HoraInicial:hh\\:mm} {consulta.HoraFinal:hh\\:mm}", Color.AntiqueWhite);
         }
     }
 
@@ -112,6 +115,6 @@ public class ConsultaView
  |_____|_|___/\__\__,_|  \__,_|\___|  \____\___/|_| |_|___/\__,_|_|\__\__,_|___/
                                                                                 
 ";
-        Console.WriteLine(logoListaDeConsultas);
+        Console.WriteLine(logoListaDeConsultas, Color.Aqua);
     }
 }

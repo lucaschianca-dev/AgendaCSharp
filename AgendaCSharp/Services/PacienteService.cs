@@ -19,7 +19,7 @@ public class PacienteService
         var pacienteExistente = _pacienteRepository.BuscarPacienteByCpf(paciente.Cpf);
         if (pacienteExistente != null)
         {
-            throw new InvalidOperationException($"\n|ERRO| - CPF {paciente.Cpf} já está cadastrado!\n");
+            throw new InvalidOperationException($"\n - CPF {paciente.Cpf} já está cadastrado!\n");
         }
 
         _pacienteRepository.AdicionarPaciente(paciente);
@@ -43,7 +43,7 @@ public class PacienteService
 
         if (paciente == null)
         {
-            throw new InvalidOperationException($"\n|ERRO| - Paciente com CPF {cpf} não encontrado.\n");
+            throw new InvalidOperationException($"Paciente com CPF {cpf} não encontrado.\n");
         }
 
         var consultasFuturas = paciente.Consultas
@@ -52,7 +52,7 @@ public class PacienteService
 
         if (consultasFuturas.Any())
         {
-            throw new InvalidOperationException($"\n|ERRO| - O paciente com CPF {cpf} possui consultas futuras agendadas.\n");
+            throw new InvalidOperationException($"O paciente com CPF {cpf} possui consultas futuras agendadas.\n");
         }
         _pacienteRepository.RemoverPacienteByCpf(cpf);
     }

@@ -9,18 +9,19 @@ public class ConsultaView
 {
     public string CapturarCpf()
     {
-        Console.Write("CPF: ");
+        ExibirMensagemAqua("\n ► Digite CPF do paciente a ser agendado\n");
+        ExibirMensagemSimboloAqua("\n> ", "CPF: ");
         return Console.ReadLine();
     }
 
     public Consulta CapturarDadosConsulta()
     {
-        Console.WriteLine("\n>> Digite os dados da consulta <<\n");
+        ExibirMensagemAqua("\n ► Digite os dados da consulta\n");
 
         DateTime data;
         while (true)
         {
-            Console.Write("Data da Consulta (DDMMAAAA): ");
+            ExibirMensagemSimboloAqua("\n> ", "Data da Consulta (DDMMAAAA): ");
             var dataInput = Console.ReadLine();
 
             if (DateTime.TryParseExact(dataInput, "ddMMyyyy", null, System.Globalization.DateTimeStyles.None, out data))
@@ -31,12 +32,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    Console.WriteLine("A consulta deve ser para uma data futura. Tente novamente.");
+                    ExibirMensagemErro("ERRO","A consulta deve ser para uma data futura. Tente novamente.");
                 }
             }
             else
             {
-                Console.WriteLine("Data inválida. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Data inválida. Tente novamente.");
             }
         }
 
@@ -53,12 +54,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    Console.WriteLine("Hora inicial fora do horário de funcionamento (08:00 - 19:00). Tente novamente.");
+                    ExibirMensagemErro("ERRO", "Hora inicial fora do horário de funcionamento (08:00 - 19:00). Tente novamente.");
                 }
             }
             else
             {
-                Console.WriteLine("Hora inicial inválida ou não é múltiplo de 15 minutos. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Hora inicial inválida ou não é múltiplo de 15 minutos. Tente novamente.");
             }
         }
 
@@ -75,12 +76,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    Console.WriteLine("Hora final deve ser após a hora inicial e dentro do horário de funcionamento (08:00 - 19:00). Tente novamente.");
+                    ExibirMensagemErro("ERRO", "Hora final deve ser após a hora inicial e dentro do horário de funcionamento (08:00 - 19:00). Tente novamente.");
                 }
             }
             else
             {
-                Console.WriteLine("Hora final inválida ou não é múltiplo de 15 minutos. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Hora final inválida ou não é múltiplo de 15 minutos. Tente novamente.");
             }
         }
 

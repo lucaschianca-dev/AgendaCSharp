@@ -23,18 +23,22 @@ public class ConsultaController
             cpf = _consultaView.CapturarCpf();
             if (_pacienteService.VerificarCpf(cpf))
             {
-                _consultaView.ExibirMensagem("Sucesso!");
+                _consultaView.ExibirMensagemVerde("Sucesso!\n");
                 break;
             }
             else
             {
-                _consultaView.ExibirMensagem($"\n|ERRO| - Paciente com CPF {cpf} não encontrado.\n");
-                _consultaView.ExibirMensagem("Deseja tentar novamente? (y/n)");
+                _consultaView.ExibirMensagemErro("ERRO", $" - Paciente com CPF {cpf} não encontrado.\n");
+                _consultaView.ExibirMensagem("\nDeseja tentar novamente? (");
+                _consultaView.ExibirMensagemAqua("y");
+                _consultaView.ExibirMensagem("/");
+                _consultaView.ExibirMensagemAqua("n");
+                _consultaView.ExibirMensagem(")\n");
 
                 string opcao = Console.ReadLine().ToLower();
                 if (opcao == "n")
                 {
-                    _consultaView.ExibirMensagem("\nOperação de agendamento de consulta cancelada.\n");
+                    _consultaView.ExibirMensagemAqua("\n ► Operação de agendamento de consulta cancelada.\n");
                     return;
                 }
             }
@@ -44,7 +48,7 @@ public class ConsultaController
         {
             var consulta = _consultaView.CapturarDadosConsulta();
             _consultaService.AdicionarConsulta(cpf, consulta);
-            _consultaView.ExibirMensagem("\nConsulta cadastrada com sucesso!\n");
+            _consultaView.ExibirMensagemVerde("\nConsulta cadastrada com sucesso!\n");
         }
         catch (InvalidOperationException ex)
         {
@@ -74,6 +78,7 @@ public class ConsultaController
                 if (!string.IsNullOrEmpty(cpf))
                 {
                     var consulta = _consultaService.BuscarConsultasByCpf(cpf);
+                    Console.Clear();
                     _consultaView.ExibirConsultas(consulta);
                     cpfValidado = true;
                 }
@@ -104,7 +109,8 @@ public class ConsultaController
                         cpfValidado = false;
                         return;
                     default:
-                        Console.WriteLine("Invalido");
+                        _consultaView.ExibirMensagemErro("Inválido", "Deve ser digitado apenas 'y' ou 'n'!\n");
+                        cpfValidado= true;
                         break;
                 }
             }

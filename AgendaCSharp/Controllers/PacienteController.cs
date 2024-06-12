@@ -40,7 +40,7 @@ public class PacienteController
         try
         {
             _pacienteService.AdicionarPaciente(paciente);
-            _pacienteView.ExibirMensagemVerde("\n ♦ Paciente cadastrado com sucesso!\n");
+            _pacienteView.ExibirMensagemVerde("\nPaciente cadastrado com sucesso!\n");
 
             while (true)
             {
@@ -94,7 +94,7 @@ public class PacienteController
             {
                 var cpf = _pacienteView.CapturarCpfParaRemocao();
                 _pacienteService.RemoverPacienteByCpf(cpf);
-                _pacienteView.ExibirMensagemVerde("\n ♦ Paciente removido com sucesso!\n");
+                _pacienteView.ExibirMensagemVerde("\nPaciente removido com sucesso!\n");
                 pacienteRemovido = true;
             }
             catch (InvalidOperationException ex)

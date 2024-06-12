@@ -135,14 +135,16 @@ public class MenuView
                 case "3":
                     Console.Clear();
                     consultaController.ListarTodasConsultas();
-
                     Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
                     Console.ReadKey(true);
-                    voltar = true;
+                    Console.Clear();
                     break;
                 case "4":
                     SimboloColorido("\n ▬ ", "Digite o CPF do Paciente: ");
                     consultaController.ListarConsultaByCpf();
+                    Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
+                    Console.ReadKey(true);
+                    Console.Clear();
                     break;
                 case "5":
                     voltar = true;

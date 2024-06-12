@@ -78,21 +78,27 @@ public class MenuView
                     break;
                 case "3":
                     Console.Clear();
-                    pacienteController.ListarPadicentes();
-                    //pacienteController.ListarPacientesByCpf();
+                    pacienteController.ListarPadicentesByCpf();
                     Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
                     Console.ReadKey(true);
                     Console.Clear();
                     break;
                 case "4":
-                    pacienteController.ListarPadicentes();
-                    //pacienteController.ListarPacientesByNome();
+                    Console.Clear();
+                    pacienteController.ListarPadicentesByNome();
+                    Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
+                    Console.ReadKey(true);
+                    Console.Clear();
                     break;
                 case "5":
                     voltar = true;
                     break;
                 default:
-                    Console.WriteLine("\n|ERRO| - Opção inválida, tente novamente.\n");
+                    Console.Clear();
+                    Console.Write(" ▲ ATENÇÃO ", Color.Crimson);
+                    Console.Write("as ");
+                    Console.Write("opções", Color.Aqua);
+                    Console.Write(" do Menu!");
                     break;
             }
         }
@@ -137,7 +143,11 @@ public class MenuView
                     voltar = true;
                     break;
                 default:
-                    Console.WriteLine("\n|ERRO| - Opção inválida, tente novamente.\n");
+                    Console.Clear();
+                    Console.Write(" ▲ ATENÇÃO ", Color.Crimson);
+                    Console.Write("as ");
+                    Console.Write("opções", Color.Aqua);
+                    Console.Write(" do Menu!");
                     break;
             }
         }

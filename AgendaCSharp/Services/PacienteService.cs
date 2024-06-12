@@ -25,21 +25,29 @@ public class PacienteService
         _pacienteRepository.AdicionarPaciente(paciente);
     }
 
-    public List<Paciente> BuscarPacientes()
+    public List<Paciente> BuscarTodosPacientes()
     {
-        return _pacienteRepository.BuscarPacientes();
+        return _pacienteRepository.BuscarTodosPacientes();
+    }
+
+    public List<Paciente> BuscarTodosPacientesByCpf()
+    {
+        return _pacienteRepository.BuscarTodosPacientesByCpf();
+    }
+
+    public List<Paciente> BuscarTodosPacientesByNome()
+    {
+        return _pacienteRepository.BuscarTodosPacientesByNome();
     }
 
     public void RemoverPacienteByCpf(string cpf)
     {
-        //if (string.IsNullOrWhiteSpace(cpf))
-        //{
-        //    throw new ArgumentException("O CPF é obrigatório!");
-        //}
-
-        //_pacienteRepository.RemoverPacienteByCpf(cpf);
-
         Paciente paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
+
+        if (string.IsNullOrEmpty(cpf))
+        {
+            throw new ArgumentException("CPF não pode ser nulo ou vazio.\n");
+        }
 
         if (paciente == null)
         {
@@ -65,10 +73,5 @@ public class PacienteService
     public void AdicionarConsulta(string cpf, Consulta consulta)
     {
         _consultaRepository.AdicionarConsulta(cpf, consulta);
-    }
-
-    public List<Consulta> BuscarTodasConsultas()
-    {
-        return _consultaRepository.BuscarTodasConsultas();
     }
 }

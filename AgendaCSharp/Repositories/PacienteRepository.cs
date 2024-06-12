@@ -11,9 +11,19 @@ public class PacienteRepository
         _pacientes.Add(paciente);
     }
 
-    public List<Paciente> BuscarPacientes()
+    public List<Paciente> BuscarTodosPacientes()
     {
         return _pacientes;
+    }
+
+    public List<Paciente> BuscarTodosPacientesByNome()
+    {
+        return _pacientes.OrderBy(p => p.Nome).ToList();
+    }
+
+    public List<Paciente> BuscarTodosPacientesByCpf()
+    {
+        return _pacientes.OrderBy(p => p.Cpf).ToList();
     }
 
     public Paciente BuscarPacienteByCpf(string cpf)

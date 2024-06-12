@@ -40,7 +40,7 @@ public class ConsultaRepository
 
     public List<Consulta> BuscarTodasConsultas()
     {
-        return _pacienteRepository.BuscarPacientes()
+        return _pacienteRepository.BuscarTodosPacientes()
             .SelectMany(p => p.Consultas)
             .OrderBy(c => c.Data)
             .ThenBy(c => c.HoraInicial)

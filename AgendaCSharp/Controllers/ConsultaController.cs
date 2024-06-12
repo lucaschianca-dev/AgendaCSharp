@@ -59,7 +59,7 @@ public class ConsultaController
 
     public void ListarTodasConsultas()
     {
-        var consulta = _pacienteService.BuscarTodasConsultas();
+        var consulta = _consultaService.BuscarTodasConsultas();
         _consultaView.ExibirConsultas(consulta);
     }
 }

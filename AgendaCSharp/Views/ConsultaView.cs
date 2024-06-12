@@ -32,12 +32,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    ExibirMensagemErro("ERRO","A consulta deve ser para uma data futura. Tente novamente.");
+                    ExibirMensagemErro("ERRO", "A consulta deve ser para uma data futura. Tente novamente.\n");
                 }
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Data inválida. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Data inválida. Tente novamente.\n");
             }
         }
 
@@ -54,12 +54,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    ExibirMensagemErro("ERRO", "Hora inicial fora do horário de funcionamento (08:00 - 19:00). Tente novamente.");
+                    ExibirMensagemErro("ERRO", "Hora inicial fora do horário de funcionamento (08:00 - 19:00). Tente novamente.\n");
                 }
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora inicial inválida ou não é múltiplo de 15 minutos. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Hora inicial inválida ou não é múltiplo de 15 minutos. Tente novamente.\n");
             }
         }
 
@@ -76,12 +76,12 @@ public class ConsultaView
                 }
                 else
                 {
-                    ExibirMensagemErro("ERRO", "Hora final deve ser após a hora inicial e dentro do horário de funcionamento (08:00 - 19:00). Tente novamente.");
+                    ExibirMensagemErro("ERRO", "Hora final deve ser após a hora inicial e dentro do horário de funcionamento (08:00 - 19:00). Tente novamente.\n");
                 }
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora final inválida ou não é múltiplo de 15 minutos. Tente novamente.");
+                ExibirMensagemErro("ERRO", "Hora final inválida ou não é múltiplo de 15 minutos. Tente novamente.\n");
             }
         }
 

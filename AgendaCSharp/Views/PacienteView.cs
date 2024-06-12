@@ -125,7 +125,7 @@ public class PacienteView
 
             foreach (var consulta in paciente.Consultas.Where(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
             {
-                Console.WriteLine($"  Consulta - Data: {consulta.Data:dd/MM/yyyy}, Hora: {consulta.HoraInicial:hh\\:mm} - {consulta.HoraFinal:hh\\:mm}", Color.Cyan);
+                Console.WriteLine($"            Agendado para: {consulta.Data:dd/MM/yyyy}\n            {consulta.HoraInicial:hh\\:mm} às {consulta.HoraFinal:hh\\:mm}", Color.Cyan);
             }
         }
     }

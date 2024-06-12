@@ -25,7 +25,7 @@ public class ConsultaView
 
             if (DateTime.TryParseExact(dataInput, "ddMMyyyy", null, System.Globalization.DateTimeStyles.None, out data))
             {
-                if (data > DateTime.Now.Date || (data == DateTime.Now.Date))
+                if (data >= DateTime.Now.Date)
                 {
                     break;
                 }
@@ -102,9 +102,34 @@ public class ConsultaView
 
     public void ExibirMensagem(string mensagem)
     {
-        Console.WriteLine(mensagem);
+        Console.Write(mensagem);
     }
 
+    public void ExibirMensagemVerde(string mensagem)
+    {
+        Console.Write(mensagem, Color.LimeGreen);
+    }
+
+    public void ExibirMensagemVermelho(string mensagem)
+    {
+        Console.Write(mensagem, Color.Crimson);
+    }
+    public void ExibirMensagemAqua(string mensagem)
+    {
+        Console.Write(mensagem, Color.Aqua);
+    }
+    public void ExibirMensagemErro(string erro, string mensagem)
+    {
+        Console.Write("\n|");
+        Console.Write(erro, Color.Crimson);
+        Console.Write("| ");
+        Console.Write(mensagem);
+    }
+    public void ExibirMensagemSimboloAqua(string simbolo, string mensagem)
+    {
+        Console.Write(simbolo, Color.Aqua);
+        Console.Write(mensagem);
+    }
     public void ExibeLogoListaDeConsultas()
     {
         string logoListaDeConsultas = @"

@@ -58,7 +58,7 @@ public class PacienteView
             Console.Write("Nome: ");
             var nomeSemValidacao = Console.ReadLine();
 
-            if (!string.IsNullOrEmpty(nomeSemValidacao) && nomeSemValidacao.Length > 1 && nomeSemValidacao.Length <= 32)
+            if (!string.IsNullOrEmpty(nomeSemValidacao) && nomeSemValidacao.Length >= 5 && nomeSemValidacao.Length <= 32)
             {
                 nomeValidado = nomeSemValidacao;
                 break;
@@ -67,9 +67,9 @@ public class PacienteView
             {
                 ExibirErro("ERRO", "- Nome não pode ser nulo! Tente novamente.\n");
             }
-            else if (nomeSemValidacao.Length <= 1)
+            else if (nomeSemValidacao.Length < 5)
             {
-                ExibirErro("ERRO", "- Nome deve conter mais de 1 caractere! Tente novamente.\n");
+                ExibirErro("ERRO", "- Nome deve conter mais de 5 caracteres! Tente novamente.\n");
             }
             else if (nomeSemValidacao.Length >= 32)
             {
@@ -77,7 +77,7 @@ public class PacienteView
             }
             else
             {
-                ExibirErro("ERRO", "- Nome Inválido! Tente novamente.\n");
+                ExibirErro("ERRO", " - Nome Inválido! Tente novamente.\n");
             }
         }
 

@@ -113,8 +113,9 @@ public class MenuView
             OpcoesMenu("1", "Agendar Consulta");
             OpcoesMenu("2", "Cancelar Agendamento");
             OpcoesMenu("3", "Listar Agenda");
-            OpcoesMenu("4", "Voltar p/ Menu Principal");
-            Console.WriteLine("\nEscolha uma opção: ");
+            OpcoesMenu("4", "Listar Agenda de Paciente");
+            OpcoesMenu("5", "Voltar p/ Menu Principal");
+            Console.Write("Escolha uma opção: ");
             var opcao = Console.ReadLine();
 
             switch (opcao)
@@ -140,6 +141,10 @@ public class MenuView
                     voltar = true;
                     break;
                 case "4":
+                    SimboloColorido("\n ▬ ", "Digite o CPF do Paciente: ");
+                    consultaController.ListarConsultaByCpf();
+                    break;
+                case "5":
                     voltar = true;
                     break;
                 default:
@@ -158,6 +163,12 @@ public class MenuView
         Console.Write("[");
         Console.Write(numero, Color.Aqua);
         Console.WriteLine("] " + mensagem);
+    }
+
+    public void SimboloColorido(string simbolo, string mensagem)
+    {
+        Console.Write(simbolo, Color.Aqua);
+        Console.Write(mensagem);
     }
 
     string mainMenu = @"

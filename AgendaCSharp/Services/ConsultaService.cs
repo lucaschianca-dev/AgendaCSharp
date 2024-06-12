@@ -30,6 +30,16 @@ public class ConsultaService
             throw new InvalidOperationException("|ERRO| - Horário de consulta sobreposto com uma consulta existente.");
         }
 
+        if (paciente.Consultas.Any(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
+        {
+            throw new InvalidOperationException($"|ERRO| - Paciente com CPF {cpf} já possui uma consulta futura.");
+        }
+
+        if (paciente == null)
+        {
+            throw new InvalidOperationException($"|ERRO| - Paciente com CPF {cpf} não encontrado.");
+        }
+
         _consultaRepository.AdicionarConsulta(cpf, consulta);
     }
 
@@ -38,8 +48,13 @@ public class ConsultaService
         return _consultaRepository.BuscarTodasConsultas();
     }
 
-    public List<Consulta> BuscarConsultasPorCpf(string cpf)
+    public List<Consulta> BuscarConsultasByCpf(string cpf)
     {
-        return _consultaRepository.BuscarConsultasPorCpf(cpf);
+        var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
+        if (paciente == null)
+        {
+            throw new InvalidOperationException($"Paciente com o CPF {cpf} não encontrado!");
+        }
+        return _consultaRepository.BuscarConsultasByCpf(cpf);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AgendaCSharp.Services;
+using AgendaCSharp.DTOs;
 using AgendaCSharp.Views;
 using Colorful;
 using Console = Colorful.Console;
@@ -35,11 +36,11 @@ public class PacienteController
 
     public void CadastrarPaciente()
     {
-        var paciente = _pacienteView.CapturarDados();
+        var pacienteDto = _pacienteView.CapturarDados();
 
         try
         {
-            _pacienteService.AdicionarPaciente(paciente);
+            _pacienteService.AdicionarPaciente(pacienteDto);
             _pacienteView.ExibirMensagemVerde("\nPaciente cadastrado com sucesso!\n");
 
             while (true)

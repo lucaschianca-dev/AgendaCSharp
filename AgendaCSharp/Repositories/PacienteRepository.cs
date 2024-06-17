@@ -6,15 +6,9 @@ public class PacienteRepository
 {
     private List<Paciente> _pacientes = new List<Paciente>();
 
-    public void AdicionarPaciente(Paciente paciente)
-    {
-        _pacientes.Add(paciente);
-    }
+    public void AdicionarPaciente(Paciente paciente) => _pacientes.Add(paciente);
 
-    public List<Paciente> BuscarTodosPacientes()
-    {
-        return _pacientes;
-    }
+    public List<Paciente> BuscarTodosPacientes() => _pacientes;
 
     public List<Paciente> BuscarTodosPacientesByNome()
     {
@@ -25,6 +19,8 @@ public class PacienteRepository
     {
         return _pacientes.OrderBy(p => p.Cpf).ToList();
     }
+
+    public Paciente BuscarPorCpf(string cpf) => _pacientes.FirstOrDefault(p => p.Cpf == cpf);
 
     public Paciente BuscarPacienteByCpf(string cpf)
     {

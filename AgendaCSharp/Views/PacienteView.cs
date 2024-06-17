@@ -1,4 +1,5 @@
 ﻿using AgendaCSharp.Models;
+using AgendaCSharp.DTOs;
 using AgendaCSharp.Services;
 using AgendaCSharp.Verificadores;
 using Colorful;
@@ -19,7 +20,7 @@ public class PacienteView
         _pacienteService = pacienteService;
     }
 
-    public Paciente CapturarDados()
+    public PacienteDTO CapturarDados()
     {
         Console.WriteLine("\n ► Informe os dados do paciente:\n", Color.Aqua);
 
@@ -108,7 +109,7 @@ public class PacienteView
             }
         }
 
-        return new Paciente(cpfValidado, nomeValidado, dataDeNascimento, idade);
+        return new PacienteDTO { Cpf = cpfValidado, Nome = nomeValidado, DataDeNascimento = dataDeNascimento, Idade = idade, Consultas = new List<ConsultaDTO>() };
     }
 
     public void ExibirPacientes(List<Paciente> pacientes)

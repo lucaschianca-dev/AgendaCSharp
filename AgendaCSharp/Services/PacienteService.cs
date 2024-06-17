@@ -1,4 +1,6 @@
-﻿using AgendaCSharp.Models;
+﻿using AgendaCSharp.DTOs;
+using AgendaCSharp.Mappers;
+using AgendaCSharp.Models;
 using AgendaCSharp.Repositories;
 
 namespace AgendaCSharp.Services;
@@ -14,14 +16,12 @@ public class PacienteService
         _consultaRepository = consultaRepository;
     }
 
-    public void AdicionarPaciente(Paciente paciente)
+    public void AdicionarPaciente(PacienteDTO pacienteDto)
     {
-        var pacienteExistente = _pacienteRepository.BuscarPacienteByCpf(paciente.Cpf);
-        if (pacienteExistente != null)
-        {
-            throw new InvalidOperationException($"\n - CPF {paciente.Cpf} já está cadastrado!\n");
-        }
+        if (_pacienteRepository.BuscarPorCpf(pacienteDto.Cpf) != null)
+            throw new InvalidOperationException($"\n - CPF {pacienteDto.Cpf} já está cadastrado!\n");
 
+        var paciente = PacienteMapper.ToEntidade(pacienteDto);
         _pacienteRepository.AdicionarPaciente(paciente);
     }
 

@@ -10,40 +10,21 @@ public class PacienteRepository
 
     public List<Paciente> BuscarTodosPacientes() => _pacientes;
 
-    public List<Paciente> BuscarTodosPacientesByNome()
-    {
-        return _pacientes.OrderBy(p => p.Nome).ToList();
-    }
+    public List<Paciente> BuscarTodosPacientesPorNome() => _pacientes.OrderBy(p => p.Nome).ToList();
 
-    public List<Paciente> BuscarTodosPacientesByCpf()
-    {
-        return _pacientes.OrderBy(p => p.Cpf).ToList();
-    }
+    public List<Paciente> BuscarTodosPacientesPorCpf() => _pacientes.OrderBy(p => p.Cpf).ToList();
 
-    public Paciente BuscarPorCpf(string cpf) => _pacientes.FirstOrDefault(p => p.Cpf == cpf);
-
-    public Paciente BuscarPacienteByCpf(string cpf)
-    {
-        try
-        {
-            return _pacientes.FirstOrDefault(p => p.Cpf == cpf);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Erro ao buscar paciente por CPF no repositório.", ex);
-        }
-    }
+    public Paciente BuscarPacienteByCpf(string cpf) => _pacientes.FirstOrDefault(p => p.Cpf == cpf);
 
     public void RemoverPacienteByCpf(String cpf)
     {
-        var paciente = _pacientes.FirstOrDefault(p => p.Cpf == cpf);
+        var paciente = BuscarPacienteByCpf(cpf);
         if (paciente != null)
         {
             _pacientes.Remove(paciente);
         }
         else
         {
-            Console.WriteLine("");
             throw new InvalidOperationException($"|ERRO| - Nenhum paciente cadastrado com o CPF: {cpf}\n");
         }
     }

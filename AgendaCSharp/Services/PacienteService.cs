@@ -18,7 +18,7 @@ public class PacienteService
 
     public void AdicionarPaciente(PacienteDTO pacienteDto)
     {
-        if (_pacienteRepository.BuscarPorCpf(pacienteDto.Cpf) != null)
+        if (_pacienteRepository.BuscarPacienteByCpf(pacienteDto.Cpf) != null)
             throw new InvalidOperationException($"\n - CPF {pacienteDto.Cpf} já está cadastrado!\n");
 
         var paciente = PacienteMapper.ToEntidade(pacienteDto);
@@ -32,12 +32,12 @@ public class PacienteService
 
     public List<Paciente> BuscarTodosPacientesByCpf()
     {
-        return _pacienteRepository.BuscarTodosPacientesByCpf();
+        return _pacienteRepository.BuscarTodosPacientesPorCpf();
     }
 
     public List<Paciente> BuscarTodosPacientesByNome()
     {
-        return _pacienteRepository.BuscarTodosPacientesByNome();
+        return _pacienteRepository.BuscarTodosPacientesPorNome();
     }
 
     public void RemoverPacienteByCpf(string cpf)

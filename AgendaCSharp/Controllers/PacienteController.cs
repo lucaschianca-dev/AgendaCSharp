@@ -28,7 +28,7 @@ public class PacienteController
 
     public void ListarPadicentesByCpf()
     {
-        var pacientes = _pacienteService.BuscarTodosPacientesByCpf();
+        var pacientes = _pacienteService.BuscarTodosPacientesPorCpf();
         Console.WriteLine("");
         _pacienteView.ExibirPacientes(pacientes);
         Console.WriteLine("");

@@ -2,6 +2,8 @@
 using AgendaCSharp.Mappers;
 using AgendaCSharp.Models;
 using AgendaCSharp.Repositories;
+using AgendaCSharp.Verificadores;
+using AgendaCSharp.Views;
 
 namespace AgendaCSharp.Services;
 
@@ -9,35 +11,49 @@ public class PacienteService
 {
     private readonly PacienteRepository _pacienteRepository;
     private readonly ConsultaRepository _consultaRepository;
+    private readonly PacienteView _pacienteView;
 
-    public PacienteService(PacienteRepository pacienteRepository, ConsultaRepository consultaRepository)
+    public PacienteService(PacienteRepository pacienteRepository, ConsultaRepository consultaRepository, PacienteView pacienteView)
     {
         _pacienteRepository = pacienteRepository;
         _consultaRepository = consultaRepository;
+        _pacienteView = pacienteView;
     }
 
     public void AdicionarPaciente(PacienteDTO pacienteDto)
     {
-        if (_pacienteRepository.BuscarPacienteByCpf(pacienteDto.Cpf) != null)
-            throw new InvalidOperationException($"\n - CPF {pacienteDto.Cpf} já está cadastrado!\n");
 
-        var paciente = PacienteMapper.ToEntidade(pacienteDto);
-        _pacienteRepository.AdicionarPaciente(paciente);
+        if (!ValidarPaciente(pacienteDto))
+        {
+            pacienteDto = _pacienteView.CapturarDados();
+            AdicionarPaciente(pacienteDto);
+        }
+        else
+        {
+            var paciente = PacienteMapper.ToEntidade(pacienteDto);
+            _pacienteRepository.AdicionarPaciente(paciente);
+        }
     }
 
-    public List<Paciente> BuscarTodosPacientes()
+    public List<PacienteDTO> BuscarTodosPacientes()
     {
-        return _pacienteRepository.BuscarTodosPacientes();
+        return _pacienteRepository.BuscarTodosPacientes()
+            .Select(PacienteMapper.ToDTO)
+            .ToList();
     }
 
-    public List<Paciente> BuscarTodosPacientesByCpf()
+    public List<PacienteDTO> BuscarTodosPacientesPorCpf()
     {
-        return _pacienteRepository.BuscarTodosPacientesPorCpf();
+        return _pacienteRepository.BuscarTodosPacientesPorCpf()
+            .Select(PacienteMapper.ToDTO)
+            .ToList();
     }
 
-    public List<Paciente> BuscarTodosPacientesByNome()
+    public List<PacienteDTO> BuscarTodosPacientesByNome()
     {
-        return _pacienteRepository.BuscarTodosPacientesPorNome();
+        return _pacienteRepository.BuscarTodosPacientesPorNome()
+            .Select(PacienteMapper.ToDTO)
+            .ToList();
     }
 
     public void RemoverPacienteByCpf(string cpf)
@@ -73,5 +89,53 @@ public class PacienteService
     public void AdicionarConsulta(string cpf, Consulta consulta)
     {
         _consultaRepository.AdicionarConsulta(cpf, consulta);
+    }
+
+    private bool ValidarPaciente(PacienteDTO pacienteDto)
+    {
+        if (string.IsNullOrEmpty(pacienteDto.Cpf))
+        {
+            _pacienteView.ExibirErro("ERRO", " CPF não pode ser nulo ou vazio.");
+            return false;
+        }
+
+        if (pacienteDto.Cpf.Length != 11)
+        {
+            _pacienteView.ExibirErro("ERRO", " CPF deve conter 11 dígitos.");
+            return false;
+        }
+
+        if (!IsNumerico.isAllDigits(pacienteDto.Cpf))
+        {
+            _pacienteView.ExibirErro("ERRO", " CPF deve conter apenas números.");
+            return false;
+        }
+
+        if (_pacienteRepository.BuscarPacienteByCpf(pacienteDto.Cpf) != null)
+        {
+            _pacienteView.ExibirErro("ERRO", $" CPF {pacienteDto.Cpf} já está cadastrado.");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(pacienteDto.Nome))
+        {
+            _pacienteView.ExibirErro("ERRO", " Nome não pode ser nulo ou vazio.");
+            return false;
+        }
+
+        if (pacienteDto.Nome.Length < 5 || pacienteDto.Nome.Length > 32)
+        {
+            _pacienteView.ExibirErro("ERRO", "Nome deve conter entre 5 e 32 caracteres.");
+            return false;
+        }
+
+        int idade = VerificaDataDeNascimento.CalcularIdade(pacienteDto.DataDeNascimento);
+        if (idade < 13)
+        {
+            _pacienteView.ExibirErro("ERRO", "A idade mínima para cadastro é 13 anos.");
+            return false;
+        }
+
+        return true;
     }
 }

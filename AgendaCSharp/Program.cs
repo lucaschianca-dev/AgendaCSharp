@@ -12,12 +12,19 @@ class Program
 
         var pacienteRepository = new PacienteRepository();
         var consultaRepository = new ConsultaRepository(pacienteRepository);
-        var pacienteService = new PacienteService(pacienteRepository, consultaRepository);
+
+        // Instancie PacienteView primeiro
+        var pacienteView = new PacienteView(isNumerico);
+
+        // Instancie PacienteService com PacienteView
+        var pacienteService = new PacienteService(pacienteRepository, consultaRepository, pacienteView);
+
+        // Agora passe PacienteService para PacienteView
+        pacienteView.SetPacienteService(pacienteService);
+
         var consultaService = new ConsultaService(consultaRepository, pacienteRepository);
 
-        var pacienteView = new PacienteView(isNumerico, pacienteService);
         var pacienteController = new PacienteController(pacienteService, pacienteView);
-
         var consultaView = new ConsultaView();
         var consultaController = new ConsultaController(consultaService, pacienteService, consultaView);
 

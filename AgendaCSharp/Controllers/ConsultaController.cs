@@ -44,19 +44,10 @@ public class ConsultaController
             }
         }
 
-        try
+        var consultaDto = _consultaView.CapturarDadosConsulta();
+        if (_consultaService.AdicionarConsulta(cpf, consultaDto))
         {
-            var consulta = _consultaView.CapturarDadosConsulta();
-            _consultaService.AdicionarConsulta(cpf, consulta);
             _consultaView.ExibirMensagemVerde("\nConsulta cadastrada com sucesso!\n");
-        }
-        catch (InvalidOperationException ex)
-        {
-            _consultaView.ExibirMensagem($"\n{ex.Message}\n");
-        }
-        catch (Exception ex)
-        {
-            _consultaView.ExibirMensagem($"\n{ex.Message}\n");
         }
     }
 
@@ -67,19 +58,19 @@ public class ConsultaController
         _consultaView.ExibirConsultas(consulta);
     }
 
-    public void ListarConsultaByCpf()
+    public void ListarConsultasByCpf()
     {
         bool cpfValidado = false;
         while (!cpfValidado)
         {
             try
             {
-                var cpf = Console.ReadLine();
+                var cpf = _consultaView.CapturarCpf();
                 if (!string.IsNullOrEmpty(cpf))
                 {
-                    var consulta = _consultaService.BuscarConsultasByCpf(cpf);
+                    var consultas = _consultaService.BuscarConsultasByCpf(cpf);
                     Console.Clear();
-                    _consultaView.ExibirConsultas(consulta);
+                    _consultaView.ExibirConsultas(consultas);
                     cpfValidado = true;
                 }
                 else

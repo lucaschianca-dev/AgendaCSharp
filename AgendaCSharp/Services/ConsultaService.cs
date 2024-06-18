@@ -1,5 +1,8 @@
-﻿using AgendaCSharp.Models;
+﻿using AgendaCSharp.DTOs;
+using AgendaCSharp.Mappers;
+using AgendaCSharp.Models;
 using AgendaCSharp.Repositories;
+using AgendaCSharp.Views;
 
 namespace AgendaCSharp.Services;
 
@@ -7,54 +10,74 @@ public class ConsultaService
 {
     private readonly ConsultaRepository _consultaRepository;
     private readonly PacienteRepository _pacienteRepository;
+    private readonly ConsultaView _consultaView;
 
-    public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository)
+    public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository, ConsultaView consultaView)
     {
         _consultaRepository = consultaRepository;
         _pacienteRepository = pacienteRepository;
+        _consultaView = consultaView;
     }
 
-    public void AdicionarConsulta(string cpf, Consulta consulta)
+    public bool AdicionarConsulta(string cpf, ConsultaDTO consultaDto)
     {
+        if (string.IsNullOrEmpty(cpf))
+        {
+            _consultaView.ExibirMensagemErro("ERRO", "CPF não pode ser nulo ou vazio.");
+            return false;
+        }
+
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
+
+        if (paciente == null)
+        {
+            _consultaView.ExibirMensagemErro("ERRO", $"Paciente com o CPF {cpf} não encontrado!");
+            return false;
+        }
+
+        var consulta = ConsultaMapper.ToEntity(consultaDto);
 
         if (consulta.Data <= DateTime.Now.Date && consulta.HoraInicial <= DateTime.Now.TimeOfDay)
         {
-            throw new InvalidOperationException("|ERRO| - A consulta deve ser agendada para uma data e hora futura.");
+            _consultaView.ExibirMensagemErro("ERRO", "A consulta deve ser agendada para uma data e hora futura.");
+            return false;
+        }
+
+        if (consulta.HoraInicial < new TimeSpan(8, 0, 0) || consulta.HoraInicial > new TimeSpan(19, 0, 0) ||
+            consulta.HoraFinal <= consulta.HoraInicial || consulta.HoraFinal > new TimeSpan(19, 0, 0))
+        {
+            _consultaView.ExibirMensagemErro("ERRO", "Horário da consulta deve ser entre 08:00 e 19:00 e a hora final deve ser após a hora inicial.");
+            return false;
         }
 
         if (paciente.Consultas.Any(c => c.Data == consulta.Data &&
             ((consulta.HoraInicial >= c.HoraInicial && consulta.HoraInicial < c.HoraFinal) ||
             (consulta.HoraFinal > c.HoraInicial && consulta.HoraFinal <= c.HoraFinal))))
         {
-            throw new InvalidOperationException("|ERRO| - Horário de consulta sobreposto com uma consulta existente.");
-        }
-
-        if (paciente.Consultas.Any(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
-        {
-            throw new InvalidOperationException($"|ERRO| - Paciente com CPF {cpf} já possui uma consulta futura.");
-        }
-
-        if (paciente == null)
-        {
-            throw new InvalidOperationException($"|ERRO| - Paciente com CPF {cpf} não encontrado.");
+            _consultaView.ExibirMensagemErro("ERRO", "Horário de consulta sobreposto com uma consulta existente.");
+            return false;
         }
 
         _consultaRepository.AdicionarConsulta(cpf, consulta);
+        return true;
     }
 
-    public List<Consulta> BuscarTodasConsultas()
+    public List<ConsultaDTO> BuscarTodasConsultas()
     {
-        return _consultaRepository.BuscarTodasConsultas();
+        return _consultaRepository.BuscarTodasConsultas()
+            .Select(ConsultaMapper.ToDTO)
+            .ToList();
     }
 
-    public List<Consulta> BuscarConsultasByCpf(string cpf)
+    public List<ConsultaDTO> BuscarConsultasByCpf(string cpf)
     {
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
         if (paciente == null)
         {
-            throw new InvalidOperationException($"Paciente com o CPF {cpf} não encontrado!");
+            _consultaView.ExibirMensagemErro("ERRO", $"Paciente com o CPF {cpf} não encontrado!");
         }
-        return _consultaRepository.BuscarConsultasByCpf(cpf);
+        return _consultaRepository.BuscarConsultasByCpf(cpf)
+            .Select(ConsultaMapper.ToDTO)
+            .ToList();
     }
 }

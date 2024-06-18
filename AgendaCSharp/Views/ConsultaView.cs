@@ -2,6 +2,7 @@
 using Colorful;
 using Console = Colorful.Console;
 using System.Drawing;
+using AgendaCSharp.DTOs;
 
 namespace AgendaCSharp.Views;
 
@@ -14,7 +15,7 @@ public class ConsultaView
         return Console.ReadLine();
     }
 
-    public Consulta CapturarDadosConsulta()
+    public ConsultaDTO CapturarDadosConsulta()
     {
         ExibirMensagemAqua("\n ► Digite os dados da consulta\n");
 
@@ -26,14 +27,7 @@ public class ConsultaView
 
             if (DateTime.TryParseExact(dataInput, "ddMMyyyy", null, System.Globalization.DateTimeStyles.None, out data))
             {
-                if (data >= DateTime.Now.Date)
-                {
-                    break;
-                }
-                else
-                {
-                    ExibirMensagemErro("ERRO", "A consulta deve ser para uma data futura. Tente novamente.\n");
-                }
+                break;
             }
             else
             {
@@ -46,20 +40,13 @@ public class ConsultaView
         {
             Console.Write("Hora Inicial (HHMM): ");
             var horaInicialInput = Console.ReadLine();
-            if (TimeSpan.TryParseExact(horaInicialInput, "hhmm", null, out horaInicial) && horaInicial.Minutes % 15 == 0)
+            if (TimeSpan.TryParseExact(horaInicialInput, "hhmm", null, out horaInicial))
             {
-                if (horaInicial >= new TimeSpan(8, 0, 0) && horaInicial <= new TimeSpan(19, 0, 0))
-                {
-                    break;
-                }
-                else
-                {
-                    ExibirMensagemErro("ERRO", "Hora inicial fora do horário de funcionamento (08:00 - 19:00). Tente novamente.\n");
-                }
+                break;
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora inicial inválida ou não é múltiplo de 15 minutos. Tente novamente.\n");
+                ExibirMensagemErro("ERRO", "Hora inicial inválida. Tente novamente.\n");
             }
         }
 
@@ -68,27 +55,20 @@ public class ConsultaView
         {
             Console.Write("Hora Final (HHMM): ");
             var horaFinalInput = Console.ReadLine();
-            if (TimeSpan.TryParseExact(horaFinalInput, "hhmm", null, out horaFinal) && horaFinal.Minutes % 15 == 0)
+            if (TimeSpan.TryParseExact(horaFinalInput, "hhmm", null, out horaFinal))
             {
-                if (horaFinal > horaInicial && horaFinal >= new TimeSpan(8, 0, 0) && horaFinal <= new TimeSpan(19, 0, 0))
-                {
-                    break;
-                }
-                else
-                {
-                    ExibirMensagemErro("ERRO", "Hora final deve ser após a hora inicial e dentro do horário de funcionamento (08:00 - 19:00). Tente novamente.\n");
-                }
+                break;
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora final inválida ou não é múltiplo de 15 minutos. Tente novamente.\n");
+                ExibirMensagemErro("ERRO", "Hora final inválida. Tente novamente.\n");
             }
         }
 
-        return new Consulta(data, horaInicial, horaFinal);
+        return new ConsultaDTO { Data = data, HoraInicial = horaInicial, HoraFinal = horaFinal };
     }
 
-    public void ExibirConsultas(List<Consulta> consultas)
+    public void ExibirConsultas(List<ConsultaDTO> consultas)
     {
         ExibeLogoListaDeConsultas();
         Console.WriteLine("\n---------------------------------------------------------------------");

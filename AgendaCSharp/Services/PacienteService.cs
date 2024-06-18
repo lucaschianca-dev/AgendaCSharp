@@ -25,14 +25,14 @@ public class PacienteService
 
         if (!ValidarPaciente(pacienteDto))
         {
-            pacienteDto = _pacienteView.CapturarDados();
-            AdicionarPaciente(pacienteDto);
+            do
+            {
+                pacienteDto = _pacienteView.CapturarDados();
+            } while (!ValidarPaciente(pacienteDto));
         }
-        else
-        {
-            var paciente = PacienteMapper.ToEntidade(pacienteDto);
-            _pacienteRepository.AdicionarPaciente(paciente);
-        }
+
+        var paciente = PacienteMapper.ToEntidade(pacienteDto);
+        _pacienteRepository.AdicionarPaciente(paciente);
     }
 
     public List<PacienteDTO> BuscarTodosPacientes()
@@ -58,19 +58,21 @@ public class PacienteService
 
     public void RemoverPacienteByCpf(string cpf)
     {
-        Paciente paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
-
         if (string.IsNullOrEmpty(cpf))
         {
             throw new ArgumentException("CPF não pode ser nulo ou vazio.\n");
         }
+
+        var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
 
         if (paciente == null)
         {
             throw new InvalidOperationException($"Paciente com CPF {cpf} não encontrado.\n");
         }
 
-        var consultasFuturas = paciente.Consultas
+        var pacienteDto = PacienteMapper.ToDTO(paciente);
+
+        var consultasFuturas = pacienteDto.Consultas
                 .Where(c => c.Data >= DateTime.Now)
                 .ToList();
 
@@ -78,6 +80,7 @@ public class PacienteService
         {
             throw new InvalidOperationException($"O paciente com CPF {cpf} possui consultas futuras agendadas.\n");
         }
+
         _pacienteRepository.RemoverPacienteByCpf(cpf);
     }
 

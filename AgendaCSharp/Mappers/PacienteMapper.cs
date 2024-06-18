@@ -7,7 +7,7 @@ public class PacienteMapper
 {
     public static Paciente ToEntidade(PacienteDTO dto)
     {
-        return new Paciente(dto.Cpf, dto.Nome, dto.DataDeNascimento, dto.Idade)
+        return new Paciente(dto.Cpf, dto.Nome, dto.DataDeNascimento)
         {
             Consultas = dto.Consultas.Select(ConsultaMapper.ToEntity).ToList()
         };

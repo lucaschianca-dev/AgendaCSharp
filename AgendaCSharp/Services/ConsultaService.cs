@@ -58,6 +58,12 @@ public class ConsultaService
             return false;
         }
 
+        if (paciente.Consultas.Any(c => c.Data >= DateTime.Now.Date && c.HoraInicial >= DateTime.Now.TimeOfDay))
+        {
+            _consultaView.ExibirMensagemErro("[ERRO] Paciente já possui uma consulta futura agendada.\n");
+            return false;
+        }
+
         _consultaRepository.AdicionarConsulta(cpf, consulta);
         return true;
     }

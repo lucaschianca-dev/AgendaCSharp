@@ -88,7 +88,7 @@ namespace AgendaCSharp.Views
 
                 foreach (var consulta in paciente.Consultas.Where(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
                 {
-                    ExibirMensagemAqua($"\n            Agendado para: {consulta.Data:dd/MM/yyyy}\n            {consulta.HoraInicial:hh\\:mm} às {consulta.HoraFinal:hh\\:mm}", Color.Cyan);
+                    ExibirMensagemAqua($"            Agendado para: {consulta.Data:dd/MM/yyyy}\n            {consulta.HoraInicial:hh\\:mm} às {consulta.HoraFinal:hh\\:mm}\n", Color.Cyan);
                 }
             }
         }

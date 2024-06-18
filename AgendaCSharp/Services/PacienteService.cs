@@ -60,7 +60,7 @@ public class PacienteService
     {
         if (string.IsNullOrEmpty(cpf))
         {
-            throw new ArgumentException("CPF não pode ser nulo ou vazio.\n");
+            throw new ArgumentException("\nCPF não pode ser nulo ou vazio.\n");
         }
 
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
@@ -98,44 +98,44 @@ public class PacienteService
     {
         if (string.IsNullOrEmpty(pacienteDto.Cpf))
         {
-            _pacienteView.ExibirErro("ERRO", " CPF não pode ser nulo ou vazio.");
+            _pacienteView.ExibirErro("ERRO", " CPF não pode ser nulo ou vazio.\n");
             return false;
         }
 
         if (pacienteDto.Cpf.Length != 11)
         {
-            _pacienteView.ExibirErro("ERRO", " CPF deve conter 11 dígitos.");
+            _pacienteView.ExibirErro("ERRO", " CPF deve conter 11 dígitos.\n");
             return false;
         }
 
         if (!IsNumerico.isAllDigits(pacienteDto.Cpf))
         {
-            _pacienteView.ExibirErro("ERRO", " CPF deve conter apenas números.");
+            _pacienteView.ExibirErro("ERRO", " CPF deve conter apenas números.\n");
             return false;
         }
 
         if (_pacienteRepository.BuscarPacienteByCpf(pacienteDto.Cpf) != null)
         {
-            _pacienteView.ExibirErro("ERRO", $" CPF {pacienteDto.Cpf} já está cadastrado.");
+            _pacienteView.ExibirErro("ERRO", $"CPF {pacienteDto.Cpf} já está cadastrado.\n");
             return false;
         }
 
         if (string.IsNullOrEmpty(pacienteDto.Nome))
         {
-            _pacienteView.ExibirErro("ERRO", " Nome não pode ser nulo ou vazio.");
+            _pacienteView.ExibirErro("ERRO", " Nome não pode ser nulo ou vazio.\n");
             return false;
         }
 
         if (pacienteDto.Nome.Length < 5 || pacienteDto.Nome.Length > 32)
         {
-            _pacienteView.ExibirErro("ERRO", "Nome deve conter entre 5 e 32 caracteres.");
+            _pacienteView.ExibirErro("ERRO", "Nome deve conter entre 5 e 32 caracteres.\n");
             return false;
         }
 
         int idade = VerificaDataDeNascimento.CalcularIdade(pacienteDto.DataDeNascimento);
         if (idade < 13)
         {
-            _pacienteView.ExibirErro("ERRO", "A idade mínima para cadastro é 13 anos.");
+            _pacienteView.ExibirErro("ERRO", "A idade mínima para cadastro é 13 anos.\n");
             return false;
         }
 

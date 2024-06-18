@@ -127,7 +127,7 @@ public class MenuView
                     Console.Clear();
                     break;
                 case "2":
-                    //consultaController.ExcluirConsulta();
+                    consultaController.ExcluirConsulta();
                     Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
                     Console.ReadKey(true);
                     Console.Clear();

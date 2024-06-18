@@ -15,6 +15,13 @@ public class ConsultaView
         return Console.ReadLine();
     }
 
+    public string CapturarCpfParaRemocao()
+    {
+        ExibirMensagemAqua("\n ► Digite CPF do paciente para cancelamento da consulta\n");
+        ExibirMensagemSimboloAqua("\n> ", "CPF: ");
+        return Console.ReadLine();
+    }
+
     public ConsultaDTO CapturarDadosConsulta()
     {
         ExibirMensagemAqua("\n ► Digite os dados da consulta\n");
@@ -31,7 +38,7 @@ public class ConsultaView
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Data inválida. Tente novamente.\n");
+                ExibirMensagemErro("[ERRO] Data inválida. Tente novamente.\n");
             }
         }
 
@@ -46,7 +53,7 @@ public class ConsultaView
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora inicial inválida. Tente novamente.\n");
+                ExibirMensagemErro("[ERRO] Hora inicial inválida. Tente novamente.\n");
             }
         }
 
@@ -61,7 +68,7 @@ public class ConsultaView
             }
             else
             {
-                ExibirMensagemErro("ERRO", "Hora final inválida. Tente novamente.\n");
+                ExibirMensagemErro("[ERRO] Hora final inválida. Tente novamente.\n");
             }
         }
 
@@ -99,12 +106,9 @@ public class ConsultaView
     {
         Console.Write(mensagem, Color.Aqua);
     }
-    public void ExibirMensagemErro(string erro, string mensagem)
+    public void ExibirMensagemErro(string erro)
     {
-        Console.Write("\n|");
         Console.Write(erro, Color.Crimson);
-        Console.Write("| ");
-        Console.Write(mensagem);
     }
     public void ExibirMensagemSimboloAqua(string simbolo, string mensagem)
     {
@@ -122,5 +126,14 @@ public class ConsultaView
                                                                                 
 ";
         Console.WriteLine(logoListaDeConsultas, Color.Aqua);
+    }
+
+    public void ExibirMensagemTentarNovamente()
+    {
+        ExibirMensagem("\nDeseja tentar novamente? (");
+        ExibirMensagemAqua("y");
+        ExibirMensagem("/");
+        ExibirMensagemAqua("n");
+        ExibirMensagem(")\n");
     }
 }

@@ -28,7 +28,7 @@ public class ConsultaController
             }
             else
             {
-                _consultaView.ExibirMensagemErro("ERRO", $" - Paciente com CPF {cpf} não encontrado.\n");
+                _consultaView.ExibirMensagemErro($"[ERRO] Paciente com CPF {cpf} não encontrado.\n");
                 _consultaView.ExibirMensagem("\nDeseja tentar novamente? (");
                 _consultaView.ExibirMensagemAqua("y");
                 _consultaView.ExibirMensagem("/");
@@ -75,7 +75,7 @@ public class ConsultaController
                 }
                 else
                 {
-                    _consultaView.ExibirMensagemErro("ERRO", "CPF não pode ser nulo!\n");
+                    _consultaView.ExibirMensagemErro("[ERRO] CPF não pode ser nulo!\n");
                     _consultaView.ExibirMensagemSimboloAqua("\n ▬ ", "Digite o CPF do Paciente: ");
                 }
             }
@@ -100,11 +100,49 @@ public class ConsultaController
                         cpfValidado = false;
                         return;
                     default:
-                        _consultaView.ExibirMensagemErro("Inválido", "Deve ser digitado apenas 'y' ou 'n'!\n");
+                        _consultaView.ExibirMensagemErro("Inválido! Deve ser digitado apenas 'y' ou 'n'!\n");
                         cpfValidado= true;
                         break;
                 }
             }
         }
+    }
+
+    public void ExcluirConsulta()
+    {
+        bool consultaRemovida = false;
+        while (!consultaRemovida)
+        {
+            string cpf = _consultaView.CapturarCpfParaRemocao();
+            if (_consultaService.RemoverConsultaByCpf(cpf))
+            {
+                _consultaView.ExibirMensagemVerde("\nConsulta removida com sucesso!\n");
+                consultaRemovida = true;
+            }
+            consultaRemovida = PerguntarSeDesejaTentarNovamente();
+        }
+    }
+
+    private bool PerguntarSeDesejaTentarNovamente()
+    {
+        _consultaView.ExibirMensagemAqua("\n► ");
+        _consultaView.ExibirMensagem("Deseja tentar novamente? (");
+        _consultaView.ExibirMensagemAqua("y");
+        _consultaView.ExibirMensagem("/");
+        _consultaView.ExibirMensagemAqua("n");
+        _consultaView.ExibirMensagem(")\n");
+
+        string condicao = Console.ReadLine().ToLower();
+        while (condicao != "y" && condicao != "n")
+        {
+            _consultaView.ExibirMensagemVermelho(" \n▲ Opção inválida. ");
+            _consultaView.ExibirMensagem("Por favor, digite '");
+            _consultaView.ExibirMensagemAqua("y");
+            _consultaView.ExibirMensagem("' para sim ou '");
+            _consultaView.ExibirMensagemAqua("n");
+            _consultaView.ExibirMensagem("' para não.\n");
+            condicao = Console.ReadLine().ToLower();
+        }
+        return condicao == "n";
     }
 }

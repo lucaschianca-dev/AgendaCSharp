@@ -32,7 +32,7 @@ public class ConsultaRepository
             .ToList();
     }
 
-    public void RemoverConsultasPorCpf(string cpf)
+    public void RemoverConsultasByCpf(string cpf)
     {
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
         if (paciente != null)

@@ -60,14 +60,14 @@ public class PacienteService
     {
         if (string.IsNullOrEmpty(cpf))
         {
-            throw new ArgumentException("\nCPF não pode ser nulo ou vazio.\n");
+            throw new ArgumentException(" CPF não pode ser nulo ou vazio.\n");
         }
 
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
 
         if (paciente == null)
         {
-            throw new InvalidOperationException($"Paciente com CPF {cpf} não encontrado.\n");
+            throw new InvalidOperationException($" Paciente com CPF {cpf} não encontrado.\n");
         }
 
         var pacienteDto = PacienteMapper.ToDTO(paciente);
@@ -78,7 +78,7 @@ public class PacienteService
 
         if (consultasFuturas.Any())
         {
-            throw new InvalidOperationException($"O paciente com CPF {cpf} possui consultas futuras agendadas.\n");
+            throw new InvalidOperationException($" Paciente com CPF {cpf} já possui consultas futuras agendadas.\n");
         }
 
         _pacienteRepository.RemoverPacienteByCpf(cpf);

@@ -21,17 +21,13 @@ public class PacienteController
     public void ListarPadicentesByNome()
     {
         var pacientes = _pacienteService.BuscarTodosPacientesByNome();
-        Console.WriteLine("");
         _pacienteView.ExibirPacientes(pacientes);
-        Console.WriteLine("");
     }
 
     public void ListarPadicentesByCpf()
     {
         var pacientes = _pacienteService.BuscarTodosPacientesPorCpf();
-        Console.WriteLine("");
         _pacienteView.ExibirPacientes(pacientes);
-        Console.WriteLine("");
     }
 
     public void CadastrarPaciente()
@@ -41,16 +37,11 @@ public class PacienteController
         try
         {
             _pacienteService.AdicionarPaciente(pacienteDto);
-            _pacienteView.ExibirMensagemVerde("\nPaciente cadastrado com sucesso!\n");
+            _pacienteView.MensagemSucessoCadastro();
 
             while (true)
             {
-                _pacienteView.ExibirMensagemAqua("\n► ");
-                _pacienteView.ExibirMensagem("Deseja cadastrar outro paciente? (");
-                _pacienteView.ExibirMensagemAqua("y");
-                _pacienteView.ExibirMensagem("/");
-                _pacienteView.ExibirMensagemAqua("n");
-                _pacienteView.ExibirMensagem(")\n");
+                _pacienteView.MensagemCadastrarOutroPaciente();
 
                 string condicao = Console.ReadLine().ToLower();
                 if (condicao == "y")
@@ -66,12 +57,7 @@ public class PacienteController
                 }
                 else
                 {
-                    _pacienteView.ExibirMensagemVermelho(" ▲ Opção inválida. ");
-                    _pacienteView.ExibirMensagem("Por favor, digite '");
-                    _pacienteView.ExibirMensagemAqua("y");
-                    _pacienteView.ExibirMensagem("' para sim ou '");
-                    _pacienteView.ExibirMensagemAqua("n");
-                    _pacienteView.ExibirMensagem("' para não.\n");
+                    _pacienteView.MensagemOpcaoInvalida();
                 }
             }
         }
@@ -81,7 +67,7 @@ public class PacienteController
         }
         catch (Exception ex)
         {
-            _pacienteView.ExibirMensagemVermelho($"Erro: {ex.Message}");
+            _pacienteView.ExibirMensagemVermelho($"Erro: {ex.Message} \n");
         }
     }
 
@@ -95,7 +81,7 @@ public class PacienteController
             {
                 var cpf = _pacienteView.CapturarCpfParaRemocao();
                 _pacienteService.RemoverPacienteByCpf(cpf);
-                _pacienteView.ExibirMensagemVerde("\nPaciente removido com sucesso!\n");
+                _pacienteView.MensagemRemoverPaciente();
                 pacienteRemovido = true;
             }
             catch (InvalidOperationException ex)
@@ -103,15 +89,8 @@ public class PacienteController
                 bool entradaValidaOperation = false;
                 while (!entradaValidaOperation)
                 {
-                    _pacienteView.ExibirMensagem($"\n|");
-                    _pacienteView.ExibirMensagemAqua("ERRO");
-                    _pacienteView.ExibirMensagem($"| - {ex.Message}\n");
-                    _pacienteView.ExibirMensagemAqua("► ");
-                    _pacienteView.ExibirMensagem("Deseja tentar novamente? (");
-                    _pacienteView.ExibirMensagemAqua("y");
-                    _pacienteView.ExibirMensagem("/");
-                    _pacienteView.ExibirMensagemAqua("n");
-                    _pacienteView.ExibirMensagem(")\n");
+                    _pacienteView.ExibirMensagemVermelho($"\n[ERRO] {ex.Message} \n");
+                    _pacienteView.MensagemTentarNovamente();
 
                     string condicao = Console.ReadLine().ToLower();
                     switch (condicao)
@@ -124,12 +103,7 @@ public class PacienteController
                             entradaValidaOperation = true;
                             break;
                         default:
-                            _pacienteView.ExibirMensagemVermelho(" ▲ Opção inválida. ");
-                            _pacienteView.ExibirMensagem("Por favor, digite '");
-                            _pacienteView.ExibirMensagemAqua("y");
-                            _pacienteView.ExibirMensagem("' para sim ou '");
-                            _pacienteView.ExibirMensagemAqua("n");
-                            _pacienteView.ExibirMensagem("' para não.\n");
+                            _pacienteView.MensagemOpcaoInvalida();
                             break;
                     }
                 }
@@ -139,15 +113,9 @@ public class PacienteController
                 bool entradaValidaArgument = false;
                 while (!entradaValidaArgument)
                 {
-                    _pacienteView.ExibirMensagem($"\n|");
-                    _pacienteView.ExibirMensagemAqua("ERRO");
-                    _pacienteView.ExibirMensagem($"| - {ex.Message}\n");
-                    _pacienteView.ExibirMensagemAqua("► ");
-                    _pacienteView.ExibirMensagem("Deseja tentar novamente? (");
-                    _pacienteView.ExibirMensagemAqua("y");
-                    _pacienteView.ExibirMensagem("/");
-                    _pacienteView.ExibirMensagemAqua("n");
-                    _pacienteView.ExibirMensagem(")\n");
+                    _pacienteView.ExibirMensagemVermelho($"\n[ERRO] {ex.Message} \n");
+                    _pacienteView.MensagemTentarNovamente();
+
 
                     string condicao = Console.ReadLine().ToLower();
                     switch (condicao)
@@ -160,22 +128,15 @@ public class PacienteController
                             entradaValidaArgument = true;
                             break;
                         default:
-                            _pacienteView.ExibirMensagemVermelho(" ▲ Opção inválida. ");
-                            _pacienteView.ExibirMensagem("Por favor, digite '");
-                            _pacienteView.ExibirMensagemAqua("y");
-                            _pacienteView.ExibirMensagem("' para sim ou '");
-                            _pacienteView.ExibirMensagemAqua("n");
-                            _pacienteView.ExibirMensagem("' para não.\n");
+                            _pacienteView.MensagemOpcaoInvalida();
                             break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                _pacienteView.ExibirMensagem($"\n|");
-                _pacienteView.ExibirMensagemAqua("ERRO");
-                _pacienteView.ExibirMensagem($"| - {ex.Message}\n");
-                _pacienteView.ExibirMensagem("Deseja tentar novamente? (y/n)");
+                _pacienteView.ExibirMensagemVermelho($"\n[ERRO] {ex.Message} \n");
+                _pacienteView.MensagemTentarNovamente();
 
                 string condicao = Console.ReadLine().ToLower();
                 if (condicao == "n")

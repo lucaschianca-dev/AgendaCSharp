@@ -11,9 +11,10 @@ namespace AgendaCSharp.Views
 {
     public class PacienteView
     {
-        private readonly IsNumerico _isNumerico;
         private PacienteService _pacienteService;
 
+        private const string Remover = "\nPaciente removido com sucesso!\n";
+        private const string Sucesso = "\nPaciente cadastrado com sucesso!\n";
         private const string InformeDadosPaciente = "\n ► Informe os dados do paciente:\n";
         private const string CpfPrompt = "\nCPF: ";
         private const string NomePrompt = "Nome: ";
@@ -29,9 +30,8 @@ namespace AgendaCSharp.Views
                                                                                 
 ";
 
-        public PacienteView(IsNumerico isNumerico)
+        public PacienteView()
         {
-            _isNumerico = isNumerico;
         }
 
         public void SetPacienteService(PacienteService pacienteService)
@@ -84,7 +84,7 @@ namespace AgendaCSharp.Views
             foreach (var paciente in pacientes)
             {
                 string dataNascimentoFormatada = paciente.DataDeNascimento.ToString("dd/MM/yyyy").PadRight(18);
-                ExibirMensagemAqua($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {dataNascimentoFormatada} {paciente.Idade}", Color.AntiqueWhite);
+                ExibirMensagemAqua($"{paciente.Cpf.PadRight(11)} {paciente.Nome.PadRight(35)} {dataNascimentoFormatada} {paciente.Idade}\n", Color.AntiqueWhite);
 
                 foreach (var consulta in paciente.Consultas.Where(c => c.Data > DateTime.Now || (c.Data == DateTime.Now.Date && c.HoraInicial > DateTime.Now.TimeOfDay)))
                 {
@@ -148,6 +148,45 @@ namespace AgendaCSharp.Views
         public void ExibeLogoListaDeConsultas()
         {
             ExibirMensagemAqua(LogoListaDeConsultas, Color.Aqua);
+        }
+
+        public void MensagemCadastrarOutroPaciente()
+        {
+            ExibirMensagemAqua("\n► ");
+            ExibirMensagem("Deseja cadastrar outro paciente? (");
+            ExibirMensagemAqua("y");
+            ExibirMensagem("/");
+            ExibirMensagemAqua("n");
+            ExibirMensagem(")\n");
+        }
+
+        public void MensagemOpcaoInvalida()
+        {
+            ExibirMensagemVermelho(" ▲ Opção inválida. ");
+            ExibirMensagem("Por favor, digite '");
+            ExibirMensagemAqua("y");
+            ExibirMensagem("' para sim ou '");
+            ExibirMensagemAqua("n");
+            ExibirMensagem("' para não.\n");
+        }
+
+        public void MensagemSucessoCadastro()
+        {
+            ExibirMensagemVerde(Sucesso);
+        }
+
+        public void MensagemRemoverPaciente()
+        {
+            ExibirMensagemVerde(Remover);
+        }
+
+        public void MensagemTentarNovamente()
+        {
+            ExibirMensagem("Deseja tentar novamente? (");
+            ExibirMensagemAqua("y");
+            ExibirMensagem("/");
+            ExibirMensagemAqua("n");
+            ExibirMensagem(")\n");
         }
     }
 }

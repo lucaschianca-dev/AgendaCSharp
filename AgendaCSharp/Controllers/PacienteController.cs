@@ -1,5 +1,4 @@
 ﻿using AgendaCSharp.Services;
-using AgendaCSharp.DTOs;
 using AgendaCSharp.Views;
 using Colorful;
 using Console = Colorful.Console;

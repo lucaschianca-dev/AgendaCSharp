@@ -1,6 +1,5 @@
 ﻿using AgendaCSharp.DTOs;
 using AgendaCSharp.Services;
-using AgendaCSharp.Verificadores;
 using Colorful;
 using Console = Colorful.Console;
 using System.Drawing;

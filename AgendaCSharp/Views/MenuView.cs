@@ -140,7 +140,6 @@ public class MenuView
                     Console.Clear();
                     break;
                 case "4":
-                    SimboloColorido("\n ▬ ", "Digite o CPF do Paciente: ");
                     consultaController.ListarConsultasByCpf();
                     Console.WriteLine("\nPressione qualquer tecla para voltar ao Menu...\n");
                     Console.ReadKey(true);

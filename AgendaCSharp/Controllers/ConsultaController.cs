@@ -60,51 +60,16 @@ public class ConsultaController
 
     public void ListarConsultasByCpf()
     {
-        bool cpfValidado = false;
-        while (!cpfValidado)
+        string cpf = _consultaView.CapturarCpf();
+        var consultas = _consultaService.BuscarConsultasByCpf(cpf, out string mensagemErro);
+        if (!string.IsNullOrEmpty(mensagemErro))
         {
-            try
-            {
-                var cpf = _consultaView.CapturarCpf();
-                if (!string.IsNullOrEmpty(cpf))
-                {
-                    var consultas = _consultaService.BuscarConsultasByCpf(cpf);
-                    Console.Clear();
-                    _consultaView.ExibirConsultas(consultas);
-                    cpfValidado = true;
-                }
-                else
-                {
-                    _consultaView.ExibirMensagemErro("[ERRO] CPF não pode ser nulo!\n");
-                    _consultaView.ExibirMensagemSimboloAqua("\n ▬ ", "Digite o CPF do Paciente: ");
-                }
-            }
-            catch (InvalidOperationException ex)
-            {
-                _consultaView.ExibirMensagem($"\n|");
-                _consultaView.ExibirMensagemVermelho("ERRO");
-                _consultaView.ExibirMensagem($"| - {ex.Message}\n");
-                _consultaView.ExibirMensagem("\nDeseja tentar novamente? (");
-                _consultaView.ExibirMensagemAqua("y");
-                _consultaView.ExibirMensagem("/");
-                _consultaView.ExibirMensagemAqua("n");
-                _consultaView.ExibirMensagem(")\n");
-                var resposta = Console.ReadLine();
-                switch (resposta)
-                {
-                    case "y":
-                        _consultaView.ExibirMensagemSimboloAqua("\n ▬ ", "Digite o CPF do Paciente: ");
-                        break;
-                    case "n":
-                        Console.Clear();
-                        cpfValidado = false;
-                        return;
-                    default:
-                        _consultaView.ExibirMensagemErro("Inválido! Deve ser digitado apenas 'y' ou 'n'!\n");
-                        cpfValidado= true;
-                        break;
-                }
-            }
+            _consultaView.ExibirMensagemErro(mensagemErro);
+        }
+        else
+        {
+            Console.Clear();
+            _consultaView.ExibirConsultas(consultas);
         }
     }
 

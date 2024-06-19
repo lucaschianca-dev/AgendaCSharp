@@ -20,6 +20,10 @@ public class ConsultaRepository
     public List<Consulta> BuscarConsultasByCpf(string cpf)
     {
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
+        if (paciente == null)
+        {
+            return new List<Consulta>();
+        }
         return paciente.Consultas;
     }
 

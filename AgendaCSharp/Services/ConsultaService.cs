@@ -1,6 +1,5 @@
 ﻿using AgendaCSharp.DTOs;
 using AgendaCSharp.Mappers;
-using AgendaCSharp.Models;
 using AgendaCSharp.Repositories;
 using AgendaCSharp.Views;
 
@@ -23,7 +22,7 @@ public class ConsultaService
     {
         if (string.IsNullOrEmpty(cpf))
         {
-            _consultaView.ExibirMensagemErro("[ERRO] CPF não pode ser nulo ou vazio.\n");
+            _consultaView.ExibirMensagemErro("\n[ERRO] CPF não pode ser nulo ou vazio.\n");
             return false;
         }
 
@@ -31,7 +30,7 @@ public class ConsultaService
 
         if (paciente == null)
         {
-            _consultaView.ExibirMensagemErro($"[ERRO] Paciente com o CPF {cpf} não encontrado!\n");
+            _consultaView.ExibirMensagemErro($"\n[ERRO] Paciente com o CPF {cpf} não encontrado!\n");
             return false;
         }
 
@@ -39,14 +38,14 @@ public class ConsultaService
 
         if (consulta.Data <= DateTime.Now.Date && consulta.HoraInicial <= DateTime.Now.TimeOfDay)
         {
-            _consultaView.ExibirMensagemErro("[ERRO] A consulta deve ser agendada para uma data e hora futura.\n");
+            _consultaView.ExibirMensagemErro("\n[ERRO] A consulta deve ser agendada para uma data e hora futura.\n");
             return false;
         }
 
         if (consulta.HoraInicial < new TimeSpan(8, 0, 0) || consulta.HoraInicial > new TimeSpan(19, 0, 0) ||
             consulta.HoraFinal <= consulta.HoraInicial || consulta.HoraFinal > new TimeSpan(19, 0, 0))
         {
-            _consultaView.ExibirMensagemErro("[ERRO] Horário da consulta deve ser entre 08:00 e 19:00 e a hora final deve ser após a hora inicial.\n");
+            _consultaView.ExibirMensagemErro("\n[ERRO] Horário da consulta deve ser entre 08:00 e 19:00 e a hora final deve ser após a hora inicial.\n");
             return false;
         }
 
@@ -54,13 +53,13 @@ public class ConsultaService
             ((consulta.HoraInicial >= c.HoraInicial && consulta.HoraInicial < c.HoraFinal) ||
             (consulta.HoraFinal > c.HoraInicial && consulta.HoraFinal <= c.HoraFinal))))
         {
-            _consultaView.ExibirMensagemErro("[ERRO] Horário de consulta sobreposto com uma consulta existente.\n");
+            _consultaView.ExibirMensagemErro("\n[ERRO] Horário de consulta sobreposto com uma consulta existente.\n");
             return false;
         }
 
         if (paciente.Consultas.Any(c => c.Data >= DateTime.Now.Date && c.HoraInicial >= DateTime.Now.TimeOfDay))
         {
-            _consultaView.ExibirMensagemErro("[ERRO] Paciente já possui uma consulta futura agendada.\n");
+            _consultaView.ExibirMensagemErro("\n[ERRO] Paciente já possui uma consulta futura agendada.\n");
             return false;
         }
 
@@ -75,13 +74,17 @@ public class ConsultaService
             .ToList();
     }
 
-    public List<ConsultaDTO> BuscarConsultasByCpf(string cpf)
+    public List<ConsultaDTO> BuscarConsultasByCpf(string cpf, out string mensagemErro)
     {
+        mensagemErro = string.Empty;
+
         var paciente = _pacienteRepository.BuscarPacienteByCpf(cpf);
         if (paciente == null)
         {
-            _consultaView.ExibirMensagemErro($"[ERRO] Paciente com o CPF {cpf} não encontrado!\n");
+            mensagemErro = $"\n[ERRO] Paciente com o CPF {cpf} não encontrado!\n";
+            return new List<ConsultaDTO>();
         }
+
         return _consultaRepository.BuscarConsultasByCpf(cpf)
             .Select(ConsultaMapper.ToDTO)
             .ToList();

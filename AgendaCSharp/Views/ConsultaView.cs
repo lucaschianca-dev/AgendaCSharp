@@ -1,5 +1,4 @@
-﻿using AgendaCSharp.Models;
-using Colorful;
+﻿using Colorful;
 using Console = Colorful.Console;
 using System.Drawing;
 using AgendaCSharp.DTOs;
@@ -10,7 +9,7 @@ public class ConsultaView
 {
     public string CapturarCpf()
     {
-        ExibirMensagemAqua("\n ► Digite CPF do paciente a ser agendado\n");
+        ExibirMensagemAqua("\n ► Digite CPF do paciente: \n");
         ExibirMensagemSimboloAqua("\n> ", "CPF: ");
         return Console.ReadLine();
     }
